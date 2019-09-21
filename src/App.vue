@@ -33,6 +33,7 @@ export default {
     box-sizing: border-box;
   }
   :root{
-    
+    --button-height:32px;
+    --font-size:14px;
   }
 </style>
