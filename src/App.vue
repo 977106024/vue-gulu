@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
+    <g-button>按钮</g-button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import GButton from './components/Button'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    // GButton
   }
 }
 </script>
@@ -25,4 +27,12 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  :root{
+    
+  }
 </style>
