@@ -1,6 +1,9 @@
 <template>
     <div>
         <button class="g-button">
+            <svg v-if="icon" class="icon" aria-hidden="true">
+                <use :xlink:href="`#i-${icon}`"></use>
+            </svg>
             <slot></slot>
         </button>
     </div>
@@ -8,7 +11,7 @@
 
 <script>
     export default {
-
+        props:['icon']
     }
 </script>
 

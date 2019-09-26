@@ -3,6 +3,7 @@ import App from './App.vue'
 
 import GButton from './components/Button'
 
+
 Vue.component('g-button',GButton)
 
 
