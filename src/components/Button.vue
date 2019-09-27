@@ -16,7 +16,18 @@
 
 <script>
     export default {
-        props:['icon','iconPosition']
+        props:{
+            icon:{},
+            iconPosition:{
+                type:String,
+                default:"left",
+                validator (value) {
+                    // return !(value !== 'left' && value !== 'right')
+                    //老师的写法很简洁
+                    return value === 'left' || value === 'right'; // true || true 返回true 否则返回false webStorm可以优化代码
+                }
+            }
+        }
     }
 </script>
 

@@ -2,7 +2,7 @@
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png">
         <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-        <g-button icon="set" icon-position="right">
+        <g-button icon="set" icon-position="down">
             按钮
         </g-button>
     </div>
