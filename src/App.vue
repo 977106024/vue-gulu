@@ -2,7 +2,9 @@
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png">
         <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-        <g-button icon="set">按钮</g-button>
+        <g-button icon="set" icon-position="right">
+            按钮
+        </g-button>
     </div>
 </template>
 
@@ -40,7 +42,7 @@
         --button-bg: white;
         --button-active-bg: #eee;
         --border-radius: 4px;
-        --color: #999;
+        --color: #333;
         --border-color: #999;
         --border-color-hover: #666;
     }
