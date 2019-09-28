@@ -2,7 +2,7 @@
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png">
         <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-        <g-button icon="set" icon-position="down">
+        <g-button icon="set" :loading="loading" icon-position="down" @click="loading = !loading">
             按钮
         </g-button>
         <g-icon name="download"></g-icon>
@@ -15,6 +15,9 @@
 
     export default {
         name: 'app',
+        data:()=>({
+           loading:false,
+        }),
         components: {
             // GButton
         }
