@@ -1,6 +1,10 @@
 <template>
     <div>
         <button class="g-button" :class="{[`icon-${iconPosition}`]:true}">
+            <div class="loading icon" v-if="icon">
+                <g-icon name="loading"></g-icon>
+            </div>
+
             <div class="icon" v-if="icon">
                 <g-icon :name="icon"></g-icon>
             </div>
@@ -30,6 +34,13 @@
 </script>
 
 <style lang="scss" scoped>
+    @keyframes spin {
+        0%{
+            transform: rotate(0deg);
+        }100%{
+            transform: rotate(360deg)
+                 }
+    }
     .g-button {
         font-size: var(--font-size);
         height: var(--button-height);
@@ -48,6 +59,10 @@
         }
         &:focus {
             outline: none;
+        }
+        >.loading{
+            /*无限转动 线性*/
+            animation: 1s spin infinite linear;
         }
         >.icon{
             order: 1;
