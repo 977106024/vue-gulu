@@ -2,9 +2,7 @@
     <div>
         <button class="g-button" :class="{[`icon-${iconPosition}`]:true}">
             <div class="icon" v-if="icon">
-                <svg class="icon" aria-hidden="true">
-                    <use :xlink:href="`#i-${icon}`"></use>
-                </svg>
+                <g-icon :name="icon"></g-icon>
             </div>
 
             <div class="content">
