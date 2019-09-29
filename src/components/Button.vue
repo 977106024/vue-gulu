@@ -1,19 +1,17 @@
 <template>
-    <div>
-        <button class="g-button" :class="{[`icon-${iconPosition}`]:true}" @click="$emit('click')">
-            <div v-if="loading" class="loading icon">
-                <g-icon name="loading"></g-icon>
-            </div>
+    <button class="g-button" :class="{[`icon-${iconPosition}`]:true}" @click="$emit('click')">
+        <div v-if="loading" class="loading icon">
+            <g-icon name="loading"></g-icon>
+        </div>
 
-            <div class="icon" v-if="icon && !loading">
-                <g-icon :name="icon"></g-icon>
-            </div>
+        <div class="icon" v-if="icon && !loading">
+            <g-icon :name="icon"></g-icon>
+        </div>
 
-            <div class="content">
-                <slot></slot>
-            </div>
-        </button>
-    </div>
+        <div class="content">
+            <slot></slot>
+        </div>
+    </button>
 </template>
 
 <script>

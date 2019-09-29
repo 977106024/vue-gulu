@@ -6,6 +6,11 @@
             按钮
         </g-button>
         <g-icon name="download"></g-icon>
+
+        <button-group>
+            <g-button icon="left">上一页</g-button>
+            <g-button icon="right" icon-position="right">下一页</g-button>
+        </button-group>
     </div>
 </template>
 
