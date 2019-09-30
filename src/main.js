@@ -19,7 +19,10 @@ new Vue({
 
 //单元测试
 import chai from 'chai'
+import spies from 'chai-spies'
 const expect = chai.expect
+chai.use(spies)
+
 {
   const Constructor = Vue.extend(GButton) //组件构造器
   const vm = new Constructor({ //new一下生产实例
@@ -93,11 +96,11 @@ const expect = chai.expect
     }
   })
   vm.$mount()
-  vm.$on('click',function(){
-    console.log(1);
-  })
+
+  let spy = chai.spy(function(){console.log(1)}) //间谍函数
+  vm.$on('click',spy)
 
   let button = vm.$el
   button.click()
-
+  expect(spy).to.have.been.called() //是否被调用了
 }
