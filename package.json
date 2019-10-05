@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev-test": "vue-cli-service watch test/* --no-cache & karma start",
+    "test": "karma start --single-run"
   },
   "dependencies": {
     "core-js": "^2.6.5",
@@ -20,8 +22,17 @@
     "chai-spies": "^1.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "karma": "^4.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-chai-spies": "^0.1.4",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon-chai": "^2.0.2",
+    "mocha": "^6.2.1",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.3.0",
     "style-loader": "^1.0.0",
     "vue-template-compiler": "^2.6.10"
   },

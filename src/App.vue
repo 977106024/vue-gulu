@@ -12,6 +12,10 @@
         <g-button>更多</g-button>
             <g-button icon="right" icon-position="right">下一页</g-button>
         </button-group>
+        <section style="margin-top: 20px">
+            <g-input value="1111" disabled/>
+            <g-input value="1111" error="1111"/>
+        </section>
     </div>
 </template>
 
