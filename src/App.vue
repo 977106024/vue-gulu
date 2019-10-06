@@ -14,7 +14,10 @@
         </button-group>
         <section style="margin-top: 20px">
             <g-input value="1111" disabled/>
-            <g-input value="1111" error="1111"/>
+            <g-input value="1111" readonly/>
+            <g-input value="1111" error="1111" v-model="testModel"/>
+            <p>{{testModel}}</p>
+            <button @click="testModel++">++</button>
         </section>
     </div>
 </template>
@@ -25,11 +28,17 @@
 
     export default {
         name: 'app',
-        data:()=>({
-           loading:false,
-        }),
         components: {
             // GButton
+        },
+        data:()=>({
+           loading:false,
+            testModel:'1'
+        }),
+        methods:{
+            inputChange(e,value){
+                console.log(1,e,value);
+            }
         }
     }
 </script>
