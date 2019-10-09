@@ -7,12 +7,15 @@ import GButton from './components/Button'
 import GIcon from './components/Icon'
 import ButtonGroup from './components/button-group'
 import GInput from './components/Input'
-
+import Grow from './components/row'
+import Gcol from './components/col'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
 Vue.component('button-group', ButtonGroup)
 Vue.component('g-input',GInput)
+Vue.component('g-row',Grow)
+Vue.component('g-col',Gcol)
 
 
 Vue.config.productionTip = false

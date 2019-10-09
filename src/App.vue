@@ -19,6 +19,30 @@
             <p>{{testModel}}</p>
             <button @click="testModel++">++</button>
         </section>
+        <section>
+            <g-row>
+                <g-col>1</g-col>
+                <g-col>2</g-col>
+            </g-row>
+            <g-row>
+                <g-col>1</g-col>
+                <g-col>2</g-col>
+                <g-col>3</g-col>
+                <g-col>4</g-col>
+            </g-row>
+            <g-row>
+                <g-col>1</g-col>
+                <g-col>2</g-col>
+                <g-col>3</g-col>
+                <g-col>4</g-col>
+                <g-col>5</g-col>
+                <g-col>6</g-col>
+            </g-row>
+            <g-row>
+                <g-col span="2">2</g-col>
+                <g-col span="22">22</g-col>
+            </g-row>
+        </section>
     </div>
 </template>
 
