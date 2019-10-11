@@ -25,10 +25,6 @@
             offset:{
                 type:[Number,String]
             },
-            phone:{
-                type:Object,
-                validator
-            },
             ipad:{
                 type:Object,
                 validator
@@ -51,12 +47,11 @@
         }),
         computed:{
             colClass(){
-                let {span,offset,phone,ipad,narrowPc,pc,widePc} = this
+                let {span,offset,ipad,narrowPc,pc,widePc} = this
                 let phoneClass = []
                 return [
                     span &&  `col-${span}`, //布局
                     offset && `offset-${offset}`, //设置边距
-                    phone && [`col-phone-${phone.span}`],
                     ipad && [`col-ipad-${ipad.span}`],
                     narrowPc && [`col-narrow-pc-${narrowPc.span}`],
                     pc && [`col-pc-${pc.span}`],
@@ -98,24 +93,7 @@
              margin-left:($i/24) * 100%;
         }
     }
-    
-    @media (max-width:567px) {
-        @for $i from 1 through 24
-        {
-            .col-phone-#{$i}
-            {
-                width:($i/24) * 100%;
-            }
-        }
 
-        @for $i from 1 through 24
-        {
-            .offset-phone-#{$i}
-            {
-                margin-left:($i/24) * 100%;
-            }
-        }
-    }
 
     @media (min-width:568px) and (max-width:768px) {
         @for $i from 1 through 24

@@ -1,8 +1,7 @@
 <template>
     <div id="app">
         <g-row class="topbat">
-            <g-col span="9"
-                   :phone="{span:24}"
+            <g-col span="24"
                    :ipad="{span:8}"
                    :narrow-pc="{span:4}"
                    :pc="{span:2}"
@@ -14,8 +13,7 @@
                     <g-col>3</g-col>
                 </g-row>
             </g-col>
-            <g-col span="15"
-                   :phone="{span:24}"
+            <g-col span="24"
                    :ipad="{span:16}"
                    :narrow-pc="{span:20}"
                    :pc="{span:22}"
