@@ -12,7 +12,7 @@
         let keys = Object.keys(value)//对象的key
         let valid = true
         keys.forEach((key)=>{
-            if(['span','offset'].includes(key)){ //对象的key是不是这个数组的其中之一
+            if(!['span','offset'].includes(key)){ //对象的key是不是这个数组的其中之一
                 valid = false
             }
         })
@@ -48,7 +48,6 @@
         computed:{
             colClass(){
                 let {span,offset,ipad,narrowPc,pc,widePc} = this
-                let phoneClass = []
                 return [
                     span &&  `col-${span}`, //布局
                     offset && `offset-${offset}`, //设置边距
@@ -95,7 +94,7 @@
     }
 
 
-    @media (min-width:568px) and (max-width:768px) {
+    @media (min-width:568px)  {
         @for $i from 1 through 24
         {
             .col-ipad-#{$i}
@@ -113,7 +112,7 @@
         }
     }
 
-    @media (min-width:769px) and (max-width:992px) {
+    @media (min-width:769px) {
         @for $i from 1 through 24
         {
             .col-narrow-pc-#{$i}
@@ -132,7 +131,7 @@
     }
 
 
-    @media (min-width:993px) and (max-width:1200px) {
+    @media (min-width:993px) {
         @for $i from 1 through 24
         {
             .col-pc-#{$i}
@@ -150,7 +149,7 @@
         }
     }
 
-    @media (min-width:1201px) {
+    @media (min-width:1200px) {
         @for $i from 1 through 24
         {
             .col-wide-pc-#{$i}

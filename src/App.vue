@@ -1,39 +1,59 @@
 <template>
     <div id="app">
-        <g-row class="topbat">
-            <g-col span="24"
-                   :ipad="{span:8}"
-                   :narrow-pc="{span:4}"
-                   :pc="{span:2}"
-                   :wide-pc="{span:1}"
-                   class="demoBox">
-                <g-row ailgn="center">
-                    <g-col>1</g-col>
-                    <g-col>2</g-col>
-                    <g-col>3</g-col>
-                </g-row>
-            </g-col>
-            <g-col span="24"
-                   :ipad="{span:16}"
-                   :narrow-pc="{span:20}"
-                   :pc="{span:22}"
-                   :wide-pc="{span:23}"
-                   class="demoBox">
-                <g-row ailgn="right">
-                    <g-col>1</g-col>
-                    <g-col>2</g-col>
-                    <g-col>3</g-col>
-                    <g-col>1</g-col>
-                    <g-col>2</g-col>
-                    <g-col>3</g-col>
-                </g-row>
-            </g-col>
-        </g-row>
-        <g-row class="">
-            <g-col span="4" class="demoBox"></g-col>
-            <g-col span="14" class="demoBox"></g-col>
-            <g-col span="6" class="demoBox"></g-col>
-        </g-row>
+            <g-row>
+                <g-col  span="24" :narrow-pc="{span:8}">
+                    <div class="demo"></div>
+                </g-col>
+                <g-col  span="24" :narrow-pc="{span:8}">
+                    <div class="demo"></div>
+                </g-col>
+                <g-col  span="24" :narrow-pc="{span:8}">
+                    <div class="demo"></div>
+                </g-col>
+                <g-col  span="24" :narrow-pc="{span:8}">
+                    <div class="demo"></div>
+                </g-col>
+                <g-col  span="24" :narrow-pc="{span:8}">
+                    <div class="demo"></div>
+                </g-col>
+                <g-col  span="24" :narrow-pc="{span:8}">
+                    <div class="demo"></div>
+                </g-col>
+            </g-row>
+<!--        <g-row class="topbat">-->
+<!--            <g-col span="24"-->
+<!--                   :ipad="{span:8}"-->
+
+<!--                   :pc="{span:2}"-->
+<!--                   :wide-pc="{span:1}"-->
+<!--                   class="demoBox">-->
+<!--                <g-row ailgn="center">-->
+<!--                    <g-col>1</g-col>-->
+<!--                    <g-col>2</g-col>-->
+<!--                    <g-col>3</g-col>-->
+<!--                </g-row>-->
+<!--            </g-col>-->
+<!--            <g-col span="24"-->
+<!--                   :ipad="{span:16}"-->
+
+<!--                   :pc="{span:22}"-->
+<!--                   :wide-pc="{span:23}"-->
+<!--                   class="demoBox">-->
+<!--                <g-row ailgn="right">-->
+<!--                    <g-col>1</g-col>-->
+<!--                    <g-col>2</g-col>-->
+<!--                    <g-col>3</g-col>-->
+<!--                    <g-col>1</g-col>-->
+<!--                    <g-col>2</g-col>-->
+<!--                    <g-col>3</g-col>-->
+<!--                </g-row>-->
+<!--            </g-col>-->
+<!--        </g-row>-->
+<!--        <g-row class="">-->
+<!--            <g-col span="4" class="demoBox"></g-col>-->
+<!--            <g-col span="14" class="demoBox"></g-col>-->
+<!--            <g-col span="6" class="demoBox"></g-col>-->
+<!--        </g-row>-->
 <!--        <img alt="Vue logo" src="./assets/logo.png">-->
 <!--        &lt;!&ndash;    <HelloWorld msg="Welcome to Your Vue.js App"/>&ndash;&gt;-->
 <!--        <g-button icon="set" :loading="loading" icon-position="down" @click="loading = !loading">-->
@@ -136,5 +156,10 @@
         height: 55px;
         background: #42b983;
         border: 1px solid red;
+    }
+    .demo{
+        background: #ccc;
+        border: 1px solid #666;
+        height: 100px;
     }
 </style>
