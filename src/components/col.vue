@@ -61,7 +61,7 @@
                 return [
                     ...createClasses({span,offset}),
                     ...createClasses(ipad,'ipad-'),
-                    ...createClasses(narrowPc,'narrowPc-pc-'),
+                    ...createClasses(narrowPc,'narrow-pc-'),
                     ...createClasses(pc,'pc-'),
                     ...createClasses(widePc,'wide-pc-')
 
