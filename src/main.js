@@ -9,6 +9,11 @@ import ButtonGroup from './components/button-group'
 import GInput from './components/Input'
 import Grow from './components/row'
 import Gcol from './components/col'
+import GLayout from './components/layout/Layout'
+import GHeader from './components/layout/Header'
+import GSider from './components/layout/Sider'
+import GContent from './components/layout/Content'
+import GFooter from './components/layout/Footer'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -16,6 +21,11 @@ Vue.component('button-group', ButtonGroup)
 Vue.component('g-input',GInput)
 Vue.component('g-row',Grow)
 Vue.component('g-col',Gcol)
+Vue.component('g-layout',GLayout)
+Vue.component('g-header',GHeader)
+Vue.component('g-sider',GSider)
+Vue.component('g-content',GContent)
+Vue.component('g-footer',GFooter)
 
 
 Vue.config.productionTip = false

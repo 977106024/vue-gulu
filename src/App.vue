@@ -1,25 +1,33 @@
 <template>
     <div id="app">
-            <g-row>
-                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">
-                    <div class="demo"></div>
-                </g-col>
-                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">
-                    <div class="demo"></div>
-                </g-col>
-                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">
-                    <div class="demo"></div>
-                </g-col>
-                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">
-                    <div class="demo"></div>
-                </g-col>
-                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">
-                    <div class="demo"></div>
-                </g-col>
-                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">
-                    <div class="demo"></div>
-                </g-col>
-            </g-row>
+                <g-layout style="height: 100vh;">
+                    <g-sider class="demo1">sider</g-sider>
+                    <g-layout>
+                        <g-header class="demo1">header</g-header>
+                        <g-content class="demo1">content</g-content>
+                        <g-footer class="demo1">footer</g-footer>
+                    </g-layout>
+                </g-layout>
+<!--            <g-row>-->
+<!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+<!--                    <div class="demo"></div>-->
+<!--                </g-col>-->
+<!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+<!--                    <div class="demo"></div>-->
+<!--                </g-col>-->
+<!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+<!--                    <div class="demo"></div>-->
+<!--                </g-col>-->
+<!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+<!--                    <div class="demo"></div>-->
+<!--                </g-col>-->
+<!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+<!--                    <div class="demo"></div>-->
+<!--                </g-col>-->
+<!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+<!--                    <div class="demo"></div>-->
+<!--                </g-col>-->
+<!--            </g-row>-->
 <!--        <g-row class="topbat">-->
 <!--            <g-col span="24"-->
 <!--                   :ipad="{span:8}"-->
@@ -161,5 +169,19 @@
         background: #ccc;
         border: 1px solid #666;
         height: 100px;
+    }
+    .demo1{
+        min-height: 100px;
+        border: 1px solid #ccc;
+    }
+    .sider{
+        width: 250px;
+        background: #42b983;
+    }
+    .header{
+        background: #2c3e50;
+    }
+    .footer{
+        background: #2c3e50;
     }
 </style>
