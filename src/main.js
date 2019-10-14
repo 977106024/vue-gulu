@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import '@/assets/svg'
+import plugin from './components/toast/plugin'
+
+Vue.use(plugin)
 
 import GButton from './components/Button'
 import GIcon from './components/Icon'
@@ -14,6 +17,7 @@ import GHeader from './components/layout/Header'
 import GSider from './components/layout/Sider'
 import GContent from './components/layout/Content'
 import GFooter from './components/layout/Footer'
+import GToast from './components/toast/Toast'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -26,7 +30,7 @@ Vue.component('g-header',GHeader)
 Vue.component('g-sider',GSider)
 Vue.component('g-content',GContent)
 Vue.component('g-footer',GFooter)
-
+Vue.component('g-toast',GToast)
 
 Vue.config.productionTip = false
 

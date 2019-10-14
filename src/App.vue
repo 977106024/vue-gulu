@@ -1,13 +1,14 @@
 <template>
     <div id="app">
-                <g-layout style="height: 100vh;">
-                    <g-sider class="demo1">sider</g-sider>
-                    <g-layout>
-                        <g-header class="demo1">header</g-header>
-                        <g-content class="demo1">content</g-content>
-                        <g-footer class="demo1">footer</g-footer>
-                    </g-layout>
-                </g-layout>
+        <button @click="clickToast">Toast</button>
+<!--                <g-layout style="height: 100vh;">-->
+<!--                    <g-sider class="demo1">sider</g-sider>-->
+<!--                    <g-layout>-->
+<!--                        <g-header class="demo1">header</g-header>-->
+<!--                        <g-content class="demo1">content</g-content>-->
+<!--                        <g-footer class="demo1">footer</g-footer>-->
+<!--                    </g-layout>-->
+<!--                </g-layout>-->
 <!--            <g-row>-->
 <!--                <g-col  span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
 <!--                    <div class="demo"></div>-->
@@ -128,6 +129,9 @@
         methods:{
             inputChange(e,value){
                 console.log(1,e,value);
+            },
+            clickToast(){
+                this.$toast('沙雕')
             }
         }
     }
