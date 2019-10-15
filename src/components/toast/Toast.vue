@@ -1,8 +1,10 @@
 <template>
-    <div class="toast">
-        <slot v-if="!enableHtml"></slot>
-        <div v-else v-html="$slots.default"></div>
-        <div class="line"></div>
+    <div class="toast" ref="toast">
+        <div class="message">
+            <slot v-if="!enableHtml"></slot>
+            <div v-else v-html="$slots.default"></div>
+        </div>
+        <div class="line" ref="line"></div>
         <span class="close" v-if="closeButton" @click="clickClose">
             {{closeButton.text}}
         </span>
@@ -18,7 +20,7 @@
             },
             autoCloseDelay:{
                 type:Number,
-                default: 20
+                default: 2
 
             },
             closeButton:{
@@ -36,13 +38,24 @@
             }
         },
         mounted(){
-            if(this.autoClose){
-                setTimeout(()=>{
-                    this.close()
-                },this.autoCloseDelay * 1000)
-            }
+            this.updateStyle()
+            this.execAutoClose()
         },
         methods:{
+            updateStyle(){
+                this.$nextTick(()=>{
+                    this.$refs.line.style.height =
+                        this.$refs.toast.getBoundingClientRect().height + 'px'
+                    //.style 只能取内联样式  getBoundingClientRect()取css样式 ->集合中有top, right, bottom, left,height,width等属性。
+                })
+            },
+            execAutoClose(){
+                if(this.autoClose){
+                    setTimeout(()=>{
+                        this.close()
+                    },this.autoCloseDelay * 1000)
+                }
+            },
             close(){
                 this.$el.remove()
                 this.$destroy()
@@ -63,10 +76,10 @@
 
 <style lang="scss" scoped>
     $font-size: 14px;
-    $toast-height: 40px;
+    $toast-min-height: 40px;
     $toast-bg: rgba(0, 0, 0, 0.75);
     .toast {
-        font-size: $font-size; height: $toast-height; line-height: 1.8;
+        font-size: $font-size; min-height: $toast-min-height; line-height: 1.8;
         position: fixed; top: 0; left: 50%; transform: translateX(-50%);
         display: flex;
         color: white;
@@ -75,14 +88,17 @@
         border-radius: 4px;
         box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.50);
         padding: 0 16px;
-    }
-    .close{
-        padding-left: 10px;
-        flex-shrink: 0;
-    }
-    .line{
-        height: 100%;
-        border-left: 1px solid #ccc;
-        margin-left: 10px;
+        .message{
+            padding: 4px 0;
+        }
+        .close{
+            padding-left: 10px;
+            flex-shrink: 0;
+        }
+        .line{
+            height: 100%;
+            border-left: 1px solid #ccc;
+            margin-left: 10px;
+        }
     }
 </style>

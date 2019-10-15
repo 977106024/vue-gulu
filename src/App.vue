@@ -131,7 +131,7 @@
                 console.log(1,e,value);
             },
             clickToast(){
-                this.$toast('asasas事实上是撒多大使sad阿达啊如果如果 辅导费房的胜多负少地方水电费速度ss<p>事实上是是是是是是</p><a href="qq.com">沙雕</a>',{
+                this.$toast('s<p>事实上是是是是是是</p><a href="qq.com">沙雕</a>',{
                     enableHtml:false,
                     // closeButton: {
                     //     text:'知道了',
