@@ -139,7 +139,7 @@
                             console.log('好的，知道了！')
                         }
                     },
-                    position:'middle',
+                    position:'bottom',
                     enableHtml:false,
                     autoClose:true,
                     autoCloseDelay: 55 //
