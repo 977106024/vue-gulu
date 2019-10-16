@@ -132,14 +132,17 @@
             },
             clickToast(){
                 this.$toast('s<p>事实上是是是是是是</p><a href="qq.com">沙雕</a>',{
+                    closeButton: {
+                        text:'知道了',
+                        callback(toast){
+                            toast.log() //调用toast组件内部方法
+                            console.log('好的，知道了！')
+                        }
+                    },
+                    position:'middle',
                     enableHtml:false,
-                    // closeButton: {
-                    //     text:'知道了',
-                    //     callback(toast){
-                    //         toast.log() //调用toast组件内部方法
-                    //         console.log('好的，知道了！')
-                    //     }
-                    // }
+                    autoClose:true,
+                    autoCloseDelay: 55 //
                 })
             }
         }
