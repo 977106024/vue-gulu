@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <button @click="clickToast">Toast</button>
+        <button @click="showToast1">top</button>
+        <button @click="showToast2">middle</button>
+        <button @click="showToast3">bottom</button>
 <!--                <g-layout style="height: 100vh;">-->
 <!--                    <g-sider class="demo1">sider</g-sider>-->
 <!--                    <g-layout>-->
@@ -130,7 +132,16 @@
             inputChange(e,value){
                 console.log(1,e,value);
             },
-            clickToast(){
+            showToast1(){
+                this.clickToast('top')
+            },
+            showToast2(){
+                this.clickToast('middle')
+            },
+            showToast3(){
+                this.clickToast('bottom')
+            },
+            clickToast(position){
                 this.$toast('s<p>事实上是是是是是是</p><a href="qq.com">沙雕</a>',{
                     closeButton: {
                         text:'知道了',
@@ -139,7 +150,7 @@
                             console.log('好的，知道了！')
                         }
                     },
-                    position:'bottom',
+                    position,
                     enableHtml:false,
                     autoClose:true,
                     autoCloseDelay: 55 //

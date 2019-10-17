@@ -1,13 +1,15 @@
 <template>
-    <div class="toast" ref="toast" :class="toastClass">
-        <div class="message">
-            <slot v-if="!enableHtml"></slot>
-            <div v-else v-html="$slots.default"></div>
-        </div>
-        <div class="line" ref="line"></div>
-        <span class="close" v-if="closeButton" @click="clickClose">
+    <div class="wrap" :class="toastClass">
+        <div class="toast" ref="toast">
+            <div class="message">
+                <slot v-if="!enableHtml"></slot>
+                <div v-else v-html="$slots.default"></div>
+            </div>
+            <div class="line" ref="line"></div>
+            <span class="close" v-if="closeButton" @click="clickClose">
             {{closeButton.text}}
-        </span>
+            </span>
+        </div>
     </div>
 </template>
 <script>
@@ -92,15 +94,49 @@
     $toast-min-height: 40px;
     $toast-bg: rgba(0, 0, 0, 0.75);
 
-    @keyframes fade_in {
-        0%{opacity: 0;margin-bottom:-100px}
-        100%{opacity: 1;margin-bottom: 0}
+    @keyframes slide_top {
+        0%{opacity: 0;transform: translateY(-100%);}
+        100%{opacity: 1;transform: translateY(0);}
+    }
+    @keyframes slide_middle {
+        0%{opacity: 0;}
+        100%{opacity: 1;}
+    }
+    @keyframes slide_bottom {
+        0%{opacity: 0;transform: translateY(100%);}
+        100%{opacity: 1;transform: translateY(0);}
+    }
+
+    .wrap{
+        position: fixed; left: 50%; transform: translateX(-50%);/*位置*/
+        $animation-duration:300ms;
+        &.position-top{ /*props 默认top*/
+            top: 0;
+            >.toast{
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                animation: slide_top $animation-duration;
+            }
+        }
+        &.position-middle{
+            top: 50%;
+            transform: translate(-50%,-50%);
+            .toast{
+                animation: slide_middle $animation-duration;
+            }
+        }
+        &.position-bottom{
+            bottom: 0;
+            >.toast{
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                animation: slide_bottom $animation-duration;
+            }
+        }
     }
 
     .toast {
-        animation: fade_in 1s;
         font-size: $font-size; min-height: $toast-min-height; line-height: 1.8;
-        position: fixed; left: 50%; transform: translateX(-50%);/*位置*/
         display: flex;
         color: white;
         align-items: center;
@@ -108,16 +144,6 @@
         border-radius: 4px;
         box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.50);
         padding: 0 16px;
-        &.position-top{ /*props 默认top*/
-            top: 0;
-        }
-        &.position-middle{
-            top: 50%;
-            transform: translate(-50%,-50%);
-        }
-        &.position-bottom{
-            bottom: 0;
-        }
         .message{
             padding: 4px 0;
         }
