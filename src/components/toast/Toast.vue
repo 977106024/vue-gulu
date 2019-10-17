@@ -91,7 +91,14 @@
     $font-size: 14px;
     $toast-min-height: 40px;
     $toast-bg: rgba(0, 0, 0, 0.75);
+
+    @keyframes fade_in {
+        0%{opacity: 0;margin-bottom:-100px}
+        100%{opacity: 1;margin-bottom: 0}
+    }
+
     .toast {
+        animation: fade_in 1s;
         font-size: $font-size; min-height: $toast-min-height; line-height: 1.8;
         position: fixed; left: 50%; transform: translateX(-50%);/*位置*/
         display: flex;
