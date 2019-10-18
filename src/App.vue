@@ -1,8 +1,28 @@
 <template>
     <div id="app">
-        <button @click="showToast1">top</button>
-        <button @click="showToast2">middle</button>
-        <button @click="showToast3">bottom</button>
+<!--            tabs-->
+        <g-tabs :selected.sync="selectedTab">
+            <g-tabs-head>
+                <template slot="actions">
+                    <button>add</button>
+                </template>
+                <g-tabs-item name="tab1" disabled>
+                    <g-icon name="set"></g-icon>
+                    资讯
+                </g-tabs-item>
+                <g-tabs-item name="tab2">头条</g-tabs-item>
+                <g-tabs-item name="tab2">热点</g-tabs-item>
+            </g-tabs-head>
+            <g-tabs-body>
+                <g-tabs-pane name="tab1">资讯</g-tabs-pane>
+                <g-tabs-pane name="tab2">头条</g-tabs-pane>
+                <g-tabs-pane name="tab3">热点</g-tabs-pane>
+            </g-tabs-body>
+        </g-tabs>
+
+<!--        <button @click="showToast1">top</button>-->
+<!--        <button @click="showToast2">middle</button>-->
+<!--        <button @click="showToast3">bottom</button>-->
 <!--                <g-layout style="height: 100vh;">-->
 <!--                    <g-sider class="demo1">sider</g-sider>-->
 <!--                    <g-layout>-->
@@ -126,7 +146,8 @@
         },
         data:()=>({
            loading:false,
-            testModel:'1'
+            testModel:'1',
+            selectedTab:'tab1'
         }),
         methods:{
             inputChange(e,value){

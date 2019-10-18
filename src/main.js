@@ -18,6 +18,11 @@ import GSider from './components/layout/Sider'
 import GContent from './components/layout/Content'
 import GFooter from './components/layout/Footer'
 import GToast from './components/toast/Toast'
+import GTabs from './components/tabs/Tabs'
+import GTabsBody from './components/tabs/Tabs-body'
+import GTabsHead from './components/tabs/Tabs-head'
+import GTabsItem from './components/tabs/Tabs-item'
+import GTabsPane from './components/tabs/Tabs-pane'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -31,6 +36,11 @@ Vue.component('g-sider',GSider)
 Vue.component('g-content',GContent)
 Vue.component('g-footer',GFooter)
 Vue.component('g-toast',GToast)
+Vue.component('g-tabs',GTabs)
+Vue.component('g-tabs-body',GTabsBody)
+Vue.component('g-tabs-head',GTabsHead)
+Vue.component('g-tabs-item',GTabsItem)
+Vue.component('g-tabs-pane',GTabsPane)
 
 Vue.config.productionTip = false
 
