@@ -152,8 +152,8 @@
                     },
                     position,
                     enableHtml:false,
-                    autoClose:true,
-                    autoCloseDelay: 55 //
+                    autoClose:3, //false是关闭 传数字是autoCloseDelay
+                    // autoCloseDelay: 55
                 })
             }
         }

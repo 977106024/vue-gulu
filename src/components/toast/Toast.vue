@@ -17,14 +17,17 @@
         name:'guluToast',
         props:{
             autoClose:{
-               type:Boolean,
-               default:true
+               type:[Boolean,Number],
+               default:2,
+                validator(value){ //默认是2s 所以只能是false或者是数字
+                   return value === false || typeof value === 'number'
+                }
             },
-            autoCloseDelay:{
-                type:Number,
-                default: 2
-
-            },
+            // autoCloseDelay:{ //合并到autoClose
+            //     type:Number,
+            //     default: 2
+            //
+            // },
             closeButton:{
                 type:Object,
                 default(){
@@ -67,7 +70,7 @@
                 if(this.autoClose){
                     setTimeout(()=>{
                         this.close()
-                    },this.autoCloseDelay * 1000)
+                    },this.autoClose * 1000)
                 }
             },
             close(){
