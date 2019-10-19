@@ -39,7 +39,7 @@
 <style lang="scss" scoped>
     .tabs-item{
         &.active{
-            background: orangered;
+            color: orangered;
         }
 
         height: 100%;
