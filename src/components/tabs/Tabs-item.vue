@@ -1,5 +1,5 @@
 <template>
-    <div class="tabs-item" @click="xxx" :class="{active:active}">
+    <div class="tabs-item" @click="xxx" :class="classes">
         <slot></slot>
     </div>
 </template>
@@ -18,8 +18,16 @@
             }
         },
         data:()=>({
-            active:false
+            active:false,
         }),
+        computed:{
+          classes(){
+              return {
+                  active:this.active,
+                  disabled:this.disabled
+              }
+          }
+        },
         //拿到tabs的注入
         inject:['eventBus'],
         created() {
@@ -29,6 +37,7 @@
         },
         methods:{
             xxx(){
+                if(this.disabled){return}
                 this.eventBus.$emit('update:selected',this.name,this)//参数1.当前点击的name 2.当前组件实例 为了head能获取item的width left信息
             }
         }
@@ -38,12 +47,13 @@
 
 <style lang="scss" scoped>
     $blue:blue;
+    $disabled-color:#ccc;
     .tabs-item{
         &.active{
             color: $blue;
         }
         &.disabled{
-            color: #ccc;
+            color: $disabled-color;
         }
 
         height: 100%;
