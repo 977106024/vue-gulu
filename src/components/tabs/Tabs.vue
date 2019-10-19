@@ -31,7 +31,15 @@
             }
         },
         mounted() {
-            this.eventBus.$emit('update:selected',this.selected) //通知事件中心 用户默认选中
+            this.$children.forEach(vm=>{
+                if(vm.$options.name === 'guluTabsHead'){ //tabs的子元素是head
+                    vm.$children.forEach(itemVm=>{
+                        if(itemVm.$options.name === 'guluTabsItem' && itemVm.name === this.selected){ //head的子元素是item 并且name是选中的这个
+                            this.eventBus.$emit('update:selected',this.selected,itemVm) //通知事件中心 用户默认选中
+                        }
+                    })
+                }
+            })
         }
 
     }

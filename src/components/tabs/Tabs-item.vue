@@ -24,13 +24,12 @@
         inject:['eventBus'],
         created() {
             this.eventBus.$on('update:selected',(name)=>{
-                console.log(name,'item组件')
                 this.active = name === this.name
             })
         },
         methods:{
             xxx(){
-                this.eventBus.$emit('update:selected',this.name)
+                this.eventBus.$emit('update:selected',this.name,this)//参数1.当前点击的name 2.当前组件实例 为了head能获取item的width left信息
             }
         }
 
