@@ -11,7 +11,7 @@
                     资讯
                 </g-tabs-item>
                 <g-tabs-item name="tab2">头条</g-tabs-item>
-                <g-tabs-item name="tab2">热点</g-tabs-item>
+                <g-tabs-item name="tab3">热点</g-tabs-item>
             </g-tabs-head>
             <g-tabs-body>
                 <g-tabs-pane name="tab1">资讯</g-tabs-pane>
