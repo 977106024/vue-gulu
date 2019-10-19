@@ -37,9 +37,13 @@
 </script>
 
 <style lang="scss" scoped>
+    $blue:blue;
     .tabs-item{
         &.active{
-            color: orangered;
+            color: $blue;
+        }
+        &.disabled{
+            color: #ccc;
         }
 
         height: 100%;

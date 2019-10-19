@@ -25,24 +25,29 @@
 
 <style lang="scss" scoped>
     $tabs-height:40px;
-    $border-color:blue;
+    $blue:blue;
+    $border-color:#ddd;
     .tabs-head{
         height: $tabs-height;
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        border: 1px solid red;
         position: relative;
+        border-bottom: 1px solid $border-color;
         .line{
             position: absolute;
             left: 0;
             bottom: 0;
-            border: 1px solid $border-color;
+            border: 1px solid $blue;
             /*翻译 翻转*/
             transition: all 350ms;
         }
         .actions-wrap{
             margin-left: auto;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 2em;
         }
     }
 </style>
