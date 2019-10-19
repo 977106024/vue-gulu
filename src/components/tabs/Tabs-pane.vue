@@ -1,5 +1,5 @@
 <template>
-    <div class="tabs-pane" :class="{active:active}">
+    <div class="tabs-pane" v-if="active">
         <slot></slot>
     </div>
 </template>
@@ -30,8 +30,5 @@
 
 <style lang="scss" scoped>
     .tabs-pane{
-        &.active{
-            color: orangered;
-        }
     }
 </style>

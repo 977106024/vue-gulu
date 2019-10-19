@@ -40,7 +40,12 @@
 <style lang="scss" scoped>
     .tabs-item{
         &.active{
-            color: orangered;
+            background: orangered;
         }
+
+        height: 100%;
+        padding: 0 2em;
+        display: flex;
+        align-items: center;
     }
 </style>

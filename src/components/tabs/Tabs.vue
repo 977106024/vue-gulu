@@ -21,15 +21,19 @@
                 }
             }
         },
+        data:()=>({
+           eventBus: new Vue()
+        }),
         //依赖注入
         provide:function(){
             return {
-                eventBus:new Vue()
+                eventBus:this.eventBus
             }
         },
-        created() {
-            // this.$emit('update:selected','tab3') //触发.sync
+        mounted() {
+            this.eventBus.$emit('update:selected',this.selected) //通知事件中心 用户默认选中
         }
+
     }
 </script>
 
