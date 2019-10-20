@@ -31,6 +31,10 @@
             }
         },
         mounted() {
+            if(this.$children.length === 0){
+                console && console.warn &&
+                console.warn('tabs子组件应该是tabs-head和tabs-body,但你没写子组件。')
+            }
             this.$children.forEach(vm=>{
                 if(vm.$options.name === 'guluTabsHead'){ //tabs的子元素是head
                     vm.$children.forEach(itemVm=>{

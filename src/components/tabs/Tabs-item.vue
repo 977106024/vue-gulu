@@ -54,6 +54,7 @@
         }
         &.disabled{
             color: $disabled-color;
+            cursor: not-allowed;
         }
 
         height: 100%;
