@@ -23,6 +23,7 @@ import GTabsBody from './components/tabs/Tabs-body'
 import GTabsHead from './components/tabs/Tabs-head'
 import GTabsItem from './components/tabs/Tabs-item'
 import GTabsPane from './components/tabs/Tabs-pane'
+import GPopover from './components/popover'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -41,6 +42,7 @@ Vue.component('g-tabs-body',GTabsBody)
 Vue.component('g-tabs-head',GTabsHead)
 Vue.component('g-tabs-item',GTabsItem)
 Vue.component('g-tabs-pane',GTabsPane)
+Vue.component('g-popover',GPopover)
 
 Vue.config.productionTip = false
 
