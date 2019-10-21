@@ -1,13 +1,25 @@
 <template>
     <div id="app">
 <!--        popover-->
-        <g-popover>
+        <g-popover position="left">
             <template slot="content">
                 <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>
             </template>
             <g-button>点我</g-button>
         </g-popover>
         <g-popover>
+            <template slot="content">
+                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
+            </template>
+            <g-button>点我</g-button>
+        </g-popover>
+        <g-popover position="bottom">
+            <template slot="content">
+                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
+            </template>
+            <g-button>点我</g-button>
+        </g-popover>
+        <g-popover position="right">
             <template slot="content">
                 <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
             </template>
@@ -203,6 +215,7 @@
         /*text-align: center;*/
         color: #2c3e50;
         margin-top: 60px;
+        margin-left: 280px;
         padding: 50px;
     }
 
