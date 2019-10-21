@@ -3,13 +3,13 @@
 <!--        popover-->
         <g-popover>
             <template slot="content">
-                <div>哈哈哈哈哈</div>
+                <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>
             </template>
             <g-button>点我</g-button>
         </g-popover>
         <g-popover>
             <template slot="content">
-                <div>hsahsa哈哈哈</div>
+                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
             </template>
             <g-button>点我</g-button>
         </g-popover>
