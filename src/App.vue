@@ -5,13 +5,13 @@
             <template slot="content">
                 <div>哈哈哈哈哈</div>
             </template>
-            <button>点我</button>
+            <g-button>点我</g-button>
         </g-popover>
         <g-popover>
             <template slot="content">
                 <div>hsahsa哈哈哈</div>
             </template>
-            <button>点我</button>
+            <g-button>点我</g-button>
         </g-popover>
 
 <!--            tabs-->

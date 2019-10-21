@@ -3,7 +3,7 @@
         <div class="content-wrap" ref="contentWrap" v-if="visible">
             <slot name="content"></slot>
         </div>
-        <span class="trigeerWrap" ref="trigeerWrap">
+        <span class="trigeerWrap" ref="trigeerWrap" style="display: inline-block;">
             <slot></slot>
         </span>
     </div>
@@ -55,16 +55,37 @@
 </script>
 
 <style lang="scss" scoped>
+    $border-color:#333;
+    $border-radius:4px;
     .popover{
         display: inline-block;
         position: relative;
     }
     /*该元素在body中，不在.popover元素下 要拿出来写*/
     .content-wrap{
-        width: 80px;
         position: absolute;
-        border: 1px solid #ddd;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
         box-shadow: 0 0 3px rgba(0,0,0,.5);
         transform: translateY(-100%);
+        padding: .4em 1em;
+        margin-top: -10px;
+        &::after,&::before{
+            content: '';
+            display: block;
+            border: 10px solid transparent;
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            top: 100%;
+            left: 10%;
+        }
+        &::before{
+            border-top-color: black;
+        }
+        &::after{
+            border-top-color: white;
+            top: calc(100% - 1px);
+        }
     }
 </style>
