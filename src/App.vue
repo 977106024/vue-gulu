@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" style="height: 58px; border: 1px solid red; padding: 0;overflow: hidden;margin-bottom: 220px;">
 <!--        popover-->
         <g-popover position="left">
             <template slot="content" slot-scope="{close}">
