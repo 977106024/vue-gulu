@@ -1,9 +1,9 @@
 <template>
-    <div class="popover" @click="onClick" ref="popover">
+    <div class="popover" ref="popover">
         <div class="content-wrap" ref="contentWrap" v-if="visible" :class="`position-${position}`">
             <slot name="content"></slot>
         </div>
-        <span class="trigeerWrap" ref="trigeerWrap" style="display: inline-block;">
+        <span class="triggerWrap" ref="triggerWrap" style="display: inline-block;">
             <slot></slot>
         </span>
     </div>
@@ -19,16 +19,47 @@
                 validator(value){
                     return ['top','left','bottom','right'].indexOf(value) >= 0
                 }
+            },
+            trigger:{
+                type:String,
+                default: 'click',
+                validator(value){
+                    return ['click','hover'].indexOf(value) >= 0
+                }
             }
         },
         data:()=>({
             visible:false
         }),
+        mounted(){
+            if(this.trigger === 'click'){ //用原生js绑定两种事件 click hover
+                this.$refs.popover.addEventListener('click',this.onClick)
+            }else{
+                this.$refs.popover.addEventListener('mouseenter',this.open)
+                this.$refs.popover.addEventListener('mouseleave',this.close)
+            }
+        },
+        // computed:{
+        //   openEvent(){
+        //       if(this.trigger === 'click'){
+        //          return 'click'
+        //       }else{
+        //         return 'mouseenter'
+        //       }
+        //   },
+        // closeEvent(){
+        //   if(this.trigger === 'click'){
+        //       return 'click'
+        //   }else{
+        //       return 'mouseleave'
+        //   }
+        // }
+        // },
         methods:{
             positionContent(){
-                const {contentWrap,trigeerWrap} = this.$refs
+                const {contentWrap,triggerWrap} = this.$refs
                 document.body.appendChild(contentWrap)
-                let {top,left,height,width} = trigeerWrap.getBoundingClientRect()
+                let {top,left,height,width} = triggerWrap.getBoundingClientRect()
                 let {height:contentHeight} = contentWrap.getBoundingClientRect()
                 const positions = { //表驱动编程 逻辑注释在commit中
                     top:{
@@ -72,7 +103,7 @@
                 document.removeEventListener('click',this.onClickDocument)//点击后删除事件
             },
             onClick(event){
-                if(this.$refs.trigeerWrap.contains(event.target)){ //是否点击的是trigeer里面的元素(按钮)
+                if(this.$refs.triggerWrap.contains(event.target)){ //是否点击的是trigeer里面的元素(按钮)
                     if(!this.visible){
                         this.open()
                     }else{
@@ -105,7 +136,7 @@
         &::after,&::before{
             content: '';
             display: block;
-            border: 10px solid transparent;
+            border: 10px solid red;
             width: 0px;
             height: 0px;
             position: absolute;
