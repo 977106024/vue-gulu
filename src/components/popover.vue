@@ -26,24 +26,31 @@
         }),
         methods:{
             positionContent(){
-                document.body.appendChild(this.$refs.contentWrap) //放到body中 不然会被父元素overflow：hidden遮挡
-                //内容定位在按钮上方
                 const {contentWrap,trigeerWrap} = this.$refs
-                let {top,left,height,width} = trigeerWrap.getBoundingClientRect()           //----------->这里获取的距离是视窗距离 如果有页面较长 有滚动部分就会定位偏差
-                    contentWrap.style.top = `${top + window.scrollY}px`  //可视窗口 + 滚动距离 因为trigeer(按钮)相对于视窗 而content(弹出的内容)是相对于document定位。(document包含超出视窗的滚动条距离)
-                    contentWrap.style.left = `${left + window.scrollX}px`
-                if(this.position === 'bottom'){
-                   contentWrap.style.top = `${top + height + window.scrollY}px`
-                   contentWrap.style.left = `${left + window.scrollX}px`
-                }else if(this.position === 'left'){
-                    let {height:contentHeight} = this.$refs.contentWrap.getBoundingClientRect()
-                    contentWrap.style.top = `${top + (height - contentHeight)/2 + window.scrollY}px` //与按钮居中对齐
-                    contentWrap.style.left = `${left + window.scrollX}px`
-                }else if(this.position === 'right'){
-                    let {height:contentHeight} = this.$refs.contentWrap.getBoundingClientRect()
-                    contentWrap.style.top = `${top + (height - contentHeight)/2 + window.scrollY}px` //与按钮居中对齐
-                    contentWrap.style.left = `${left + width+ window.scrollX}px`
+                document.body.appendChild(contentWrap)
+                let {top,left,height,width} = trigeerWrap.getBoundingClientRect()
+                let {height:contentHeight} = contentWrap.getBoundingClientRect()
+                const positions = { //表驱动编程 逻辑注释在commit中
+                    top:{
+                        top:top + window.scrollY,
+                        left:left + window.scrollX
+                    },
+                    left:{
+                        top:top + (height - contentHeight)/2 + window.scrollY,
+                        left:left + window.scrollX
+                    },
+                    right:{
+                        top:top + (height - contentHeight)/2 + window.scrollY,
+                        left:left + width+ window.scrollX
+                    },
+                    bottom:{
+                        top:top + height + window.scrollY,
+                        left:left + window.scrollX
+                    }
                 }
+
+                contentWrap.style.top = positions[this.position].top + 'px'
+                contentWrap.style.left = positions[this.position].left + 'px'
             },
             onClickDocument (e){ //原本用bind绑定this 但是bind会生成一个新函数
                 if(this.$refs.popover &&                                      //1.点击popover不会触发(点击按钮触发两次关闭bug) 2.点击content 就不会触发document的click
