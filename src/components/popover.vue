@@ -136,7 +136,7 @@
         &::after,&::before{
             content: '';
             display: block;
-            border: 10px solid red;
+            border: 10px solid transparent;
             width: 0px;
             height: 0px;
             position: absolute;
@@ -146,6 +146,7 @@
             margin-top: -10px;
             &::after,&::before{
                 left: 10px;
+                border-bottom: none;
             }
             &::before{
                 border-top-color: black;
@@ -160,6 +161,7 @@
             margin-top: 10px;
             &::after,&::before{
                 left: 10px;
+                border-top: none;
             }
             &::before{
                 border-bottom-color: black;
@@ -176,6 +178,7 @@
             &::after,&::before{
                 top: 50%;
                 transform: translateY(-50%);
+                border-right: none;
             }
             &::before{
                 border-left-color: black;
@@ -191,6 +194,7 @@
             &::after,&::before{
                 top: 50%;
                 transform: translateY(-50%);
+                border-left: none;
             }
             &::before{
                 border-right-color: black;
