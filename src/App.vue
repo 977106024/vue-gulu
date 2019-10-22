@@ -2,8 +2,9 @@
     <div id="app">
 <!--        popover-->
         <g-popover position="left">
-            <template slot="content">
+            <template slot="content" slot-scope="{close}">
                 <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>
+                <button @click="close">关闭</button>
             </template>
             <g-button>点我</g-button>
         </g-popover>
