@@ -1,56 +1,62 @@
 <template>
-    <div id="app" style="height: 58px; border: 1px solid red; padding: 0;overflow: hidden;margin-bottom: 220px;">
+    <div id="app">
+<!--        手风琴-->
+        <g-collapse>
+            <g-collapse-item title="ahong">帅哥</g-collapse-item>
+            <g-collapse-item title="ahong">帅哥</g-collapse-item>
+            <g-collapse-item title="ahong">帅哥</g-collapse-item>
+        </g-collapse>
 <!--        popover-->
-        <g-popover position="left">
-            <template slot="content" slot-scope="{close}">
-                <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>
-                <button @click="close">关闭</button>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
-        <g-popover>
-            <template slot="content">
-                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
-        <g-popover position="bottom">
-            <template slot="content">
-                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
-        <g-popover position="right">
-            <template slot="content">
-                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
+<!--        <g-popover position="left">-->
+<!--            <template slot="content" slot-scope="{close}">-->
+<!--                <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>-->
+<!--                <button @click="close">关闭</button>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
+<!--        <g-popover>-->
+<!--            <template slot="content">-->
+<!--                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
+<!--        <g-popover position="bottom">-->
+<!--            <template slot="content">-->
+<!--                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
+<!--        <g-popover position="right">-->
+<!--            <template slot="content">-->
+<!--                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
 
-        <g-popover position="left" trigger="hover">
-            <template slot="content">
-                <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
-        <g-popover trigger="hover">
-            <template slot="content">
-                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
-        <g-popover position="bottom" trigger="hover">
-            <template slot="content">
-                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
-        <g-popover position="right" trigger="hover">
-            <template slot="content">
-                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>
-            </template>
-            <g-button>点我</g-button>
-        </g-popover>
+<!--        <g-popover position="left" trigger="hover">-->
+<!--            <template slot="content">-->
+<!--                <div>哈哈加斯哈哈对话框哈哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
+<!--        <g-popover trigger="hover">-->
+<!--            <template slot="content">-->
+<!--                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
+<!--        <g-popover position="bottom" trigger="hover">-->
+<!--            <template slot="content">-->
+<!--                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
+<!--        <g-popover position="right" trigger="hover">-->
+<!--            <template slot="content">-->
+<!--                <div>sadsadasdsadasdsaljkdsajkdlkasjdlsajdklajsdkljaskdljakldjalks</div>-->
+<!--            </template>-->
+<!--            <g-button>点我</g-button>-->
+<!--        </g-popover>-->
 
 <!--            tabs-->
 <!--        <g-tabs :selected.sync="selectedTab">-->
@@ -241,7 +247,7 @@
         /*text-align: center;*/
         color: #2c3e50;
         margin-top: 60px;
-        margin-left: 280px;
+        margin-left: 80px;
         padding: 50px;
     }
 

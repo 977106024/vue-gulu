@@ -24,6 +24,8 @@ import GTabsHead from './components/tabs/Tabs-head'
 import GTabsItem from './components/tabs/Tabs-item'
 import GTabsPane from './components/tabs/Tabs-pane'
 import GPopover from './components/popover'
+import GCollapse from './components/collapse/collapse'
+import GCollapseItem from './components/collapse/collapse-item'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -43,6 +45,8 @@ Vue.component('g-tabs-head',GTabsHead)
 Vue.component('g-tabs-item',GTabsItem)
 Vue.component('g-tabs-pane',GTabsPane)
 Vue.component('g-popover',GPopover)
+Vue.component('g-collapse',GCollapse)
+Vue.component('g-collapse-item',GCollapseItem)
 
 Vue.config.productionTip = false
 
