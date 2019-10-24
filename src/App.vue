@@ -1,12 +1,14 @@
 <template>
     <div id="app">
+<!--        cascader-->
+        <g-cascader :source="source"></g-cascader>
 <!--        手风琴-->
-        <g-collapse single :selected.sync="selected">
-            <g-collapse-item title="ahong" name="1">帅哥</g-collapse-item>
-            <g-collapse-item title="ahong" name="2">帅哥</g-collapse-item>
-            <g-collapse-item title="ahong" name="3">帅哥</g-collapse-item>
-        </g-collapse>
-        <p>{{selected}}</p>
+<!--        <g-collapse single :selected.sync="selected">-->
+<!--            <g-collapse-item title="ahong" name="1">帅哥</g-collapse-item>-->
+<!--            <g-collapse-item title="ahong" name="2">帅哥</g-collapse-item>-->
+<!--            <g-collapse-item title="ahong" name="3">帅哥</g-collapse-item>-->
+<!--        </g-collapse>-->
+<!--        <p>{{selected}}</p>-->
 <!--        popover-->
 <!--        <g-popover position="left">-->
 <!--            <template slot="content" slot-scope="{close}">-->
@@ -207,7 +209,36 @@
            loading:false,
             testModel:'1',
             selectedTab:'tab1',
-            selected:['1','2']
+            selected:['1','2'],
+            source:[{
+               name:'湖北',
+                children:[
+                    {name:'武汉',
+                    children:[
+                        {name:'武昌区'},
+                        {name:'洪山区'},
+                        {name:'硚口区'}
+                    ]},
+                    {name:'咸宁',
+                        children:[
+                            {name:'温泉'},
+                            {name:'咸安'}
+                        ]},
+                    {name:'仙桃'}
+                ]
+            },
+                {
+                    name:'浙江',
+                    children:[
+                        {
+                            name:'杭州',
+                        },
+                        {
+                            name:'宁波'
+                        }
+                    ]
+                }
+            ]
         }),
         methods:{
             inputChange(e,value){
