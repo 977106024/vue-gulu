@@ -15,15 +15,18 @@
             title:{
                 type:String,
             },
+            name:String
         },
         inject:['eventBus'],
         data:()=>({
             isShow:false
         }),
         mounted(){
-          this.eventBus.$on('click',(vm)=>{
+            this.eventBus && this.eventBus.$on('update:selected',(names)=>{
               // console.log(this === vm); 两个对象引用地址是一样的
-              if(this !== vm){
+              if(names.indexOf(this.name) >= 0){
+                  this.isShow = true
+              }else{
                   this.isShow = false
               }
           })
@@ -31,10 +34,9 @@
         methods:{
             tggle(){
                 if(this.isShow){
-                    this.isShow = false
+                    this.eventBus && this.eventBus.$emit('update:removeSelected',this.name)
                 }else{
-                    this.isShow = true
-                    this.eventBus.$emit('click',this)
+                    this.eventBus && this.eventBus.$emit('update:addSelected',this.name)
                 }
             }
         }

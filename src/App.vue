@@ -1,11 +1,12 @@
 <template>
     <div id="app">
 <!--        手风琴-->
-        <g-collapse>
-            <g-collapse-item title="ahong">帅哥</g-collapse-item>
-            <g-collapse-item title="ahong">帅哥</g-collapse-item>
-            <g-collapse-item title="ahong">帅哥</g-collapse-item>
+        <g-collapse single :selected.sync="selected">
+            <g-collapse-item title="ahong" name="1">帅哥</g-collapse-item>
+            <g-collapse-item title="ahong" name="2">帅哥</g-collapse-item>
+            <g-collapse-item title="ahong" name="3">帅哥</g-collapse-item>
         </g-collapse>
+        <p>{{selected}}</p>
 <!--        popover-->
 <!--        <g-popover position="left">-->
 <!--            <template slot="content" slot-scope="{close}">-->
@@ -205,7 +206,8 @@
         data:()=>({
            loading:false,
             testModel:'1',
-            selectedTab:'tab1'
+            selectedTab:'tab1',
+            selected:['1','2']
         }),
         methods:{
             inputChange(e,value){
