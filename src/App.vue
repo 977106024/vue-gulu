@@ -1,8 +1,11 @@
 <template>
     <div id="app">
-<!--        cascader-->
-        <g-cascader :source="source"></g-cascader>
-<!--        手风琴-->
+<!--        <cascader-->
+        <p>{{selected2}}</p>
+        <p>1234445</p>
+        <g-cascader :source="source" popover-height="300px" :selected="selected2" @update:selected="selected2 = $event"></g-cascader>
+        <p>1212121212</p>
+        <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
 <!--            <g-collapse-item title="ahong" name="1">帅哥</g-collapse-item>-->
 <!--            <g-collapse-item title="ahong" name="2">帅哥</g-collapse-item>-->
@@ -210,6 +213,7 @@
             testModel:'1',
             selectedTab:'tab1',
             selected:['1','2'],
+            selected2:[],
             source:[{
                name:'湖北',
                 children:[
@@ -237,6 +241,9 @@
                             name:'宁波'
                         }
                     ]
+                },
+                {
+                    name:'北京'
                 }
             ]
         }),

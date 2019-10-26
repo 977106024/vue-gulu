@@ -4,7 +4,7 @@
             <slot></slot>
         </div>
         <div class="popover" v-if="popoverVisible">
-            <cascader-item :items="source"></cascader-item>
+            <cascader-item :items="source" :height="popoverHeight" :selected="selected" @update:selected="onUpdateSelected"></cascader-item>
         </div>
     </div>
 </template>
@@ -15,43 +15,40 @@
         name: "cascader",
         components:{cascaderItem},
         props:{
-            source:Array
+            source:Array,
+            popoverHeight:String,
+            selected:{
+                type:Array,
+                default:()=>[]
+            }
         },
         data:()=>({
             popoverVisible:false,
-            levelSelected1:null,
-            levelSelected2:null,
         }),
-        computed:{
-          lave2(){
-              if(this.levelSelected1){//null
-                  return this.levelSelected1.children
-              }else{
-                  return []
-              }
-          },
-            lave3(){
-                if(this.levelSelected2){
-                    return this.levelSelected2.children
-                }else{
-                    return []
-                }
+        methods:{
+            onUpdateSelected(newSelected){
+                this.$emit('update:selected',newSelected)
             }
-        },
+        }
     }
 </script>
 
 <style lang="scss" scoped>
+    @import '../var';
     .cascader{
+        position:relative;
         .trigger{
             width: 250px;
             height: 32px;
             border: 1px solid red;
         }
         .popover{
-            height: 200px;
-            border: 1px solid yellowgreen;
             display: flex;
+            position:absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            @extend .box-shadow;
         }
     }
 </style>
