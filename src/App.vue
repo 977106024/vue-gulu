@@ -1,9 +1,8 @@
 <template>
     <div id="app">
 <!--        <cascader-->
-        <p>{{selected2}}</p>
         <p>1234445</p>
-        <g-cascader :source="source" popover-height="300px" :selected="selected2" @update:selected="selected2 = $event"></g-cascader>
+        <g-cascader :source="source" popover-height="300px" :selected.sync="selected2"></g-cascader>
         <p>1212121212</p>
         <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
@@ -200,8 +199,15 @@
 </template>
 
 <script>
-    // import HelloWorld from './components/HelloWorld.vue'
-    // import GButton from './components/Button'
+    import db from '@/assets/db'
+
+    //模拟数据加载
+    function ajax(parentId){
+        return new Promise((success,fail)=>{
+            let result = db.filter(item => item.parent_id == parentId)
+            success(result)
+        })
+    }
 
     export default {
         name: 'app',
@@ -247,6 +253,11 @@
                 }
             ]
         }),
+        created(){
+            ajax(0).then(res=>{
+                this.source = res
+            })
+        },
         methods:{
             inputChange(e,value){
                 console.log(1,e,value);
