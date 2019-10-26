@@ -32,7 +32,7 @@
         },
         computed:{
             rightItems(){
-                let currentSelected = this.selected[this.level]
+                let currentSelected = this.selected[this.level]//在第几层[1,2,3]就拿第几层的数据 对应下面的onClickLabel
                 if(currentSelected && currentSelected.children){ //点击了有值 并且有children
                     return currentSelected.children
                 }else{
@@ -44,6 +44,7 @@
             onClickLabel(item){ //1.单向数据流 2.全拷贝
                 let copy = JSON.parse(JSON.stringify(this.selected))
                 copy[this.level] = item
+                copy.splice(this.level+1)
                 this.$emit('update:selected',copy)
             },
             onUpdateSelected(newSelected){//接收组件内的onClickLabel  this.$emit('update:selected',copy)  !递归组件接收自己的$emit
