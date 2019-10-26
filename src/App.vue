@@ -2,7 +2,7 @@
     <div id="app">
 <!--        <cascader-->
         <p>1234445</p>
-        <g-cascader :source="source" popover-height="300px" :selected.sync="selected2"></g-cascader>
+        <g-cascader :source="source" popover-height="300px" :selected.sync="selected2" @update:selected="xxx"></g-cascader>
         <p>1212121212</p>
         <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
@@ -202,7 +202,7 @@
     import db from '@/assets/db'
 
     //模拟数据加载
-    function ajax(parentId){
+    function ajax(parentId=0){
         return new Promise((success,fail)=>{
             let result = db.filter(item => item.parent_id == parentId)
             success(result)
@@ -220,42 +220,12 @@
             selectedTab:'tab1',
             selected:['1','2'],
             selected2:[],
-            source:[{
-               name:'湖北',
-                children:[
-                    {name:'武汉',
-                    children:[
-                        {name:'武昌区'},
-                        {name:'洪山区'},
-                        {name:'硚口区'}
-                    ]},
-                    {name:'咸宁',
-                        children:[
-                            {name:'温泉'},
-                            {name:'咸安'}
-                        ]},
-                    {name:'仙桃'}
-                ]
-            },
-                {
-                    name:'浙江',
-                    children:[
-                        {
-                            name:'杭州',
-                        },
-                        {
-                            name:'宁波'
-                        }
-                    ]
-                },
-                {
-                    name:'北京'
-                }
-            ]
+            source:[]
         }),
         created(){
             ajax(0).then(res=>{
                 this.source = res
+                console.log(res)
             })
         },
         methods:{
@@ -284,6 +254,12 @@
                     enableHtml:false,
                     autoClose:3, //false是关闭 传数字是autoCloseDelay
                     // autoCloseDelay: 55
+                })
+            },
+            xxx(){
+                ajax(this.selected2[0].id).then(res=>{
+                        let selectedObj = this.source.filter(item => item.id === this.selected2[0].id)[0] //找出选择的对象
+                        this.$set(selectedObj,'children',res) //把res设置成选中项的children
                 })
             }
         }
