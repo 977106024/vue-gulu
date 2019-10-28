@@ -2,8 +2,9 @@
     <div id="app">
 <!--        <cascader-->
         <p>1234445</p>
-        <g-cascader :source="source" popover-height="300px" :selected.sync="selected2" @update:selected="xxx"></g-cascader>
+        <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
         <p>1212121212</p>
+        <p>{{source}}</p>
         <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
 <!--            <g-collapse-item title="ahong" name="1">帅哥</g-collapse-item>-->
@@ -204,10 +205,51 @@
     //模拟数据加载
     function ajax(parentId=0){
         return new Promise((success,fail)=>{
-            let result = db.filter(item => item.parent_id == parentId)
+            let result = db.filter(item => item.parent_id == parentId) //filter总是返回数组
+            result.forEach(node =>{
+                let children = db.filter(item=>item.parent_id === node.id) //根据数据结构来看 id === parent_id有的话 就说明有children
+                if(children.length > 0){
+                    node.isLeaf = false //然后children里面还有值 就是没到叶子
+                }else{
+                    node.isLeaf = true
+                }
+            })
             success(result)
         })
     }
+
+    const dd = [{
+        name:'湖北',
+        children:[
+            {name:'武汉',
+                children:[
+                    {name:'武昌区'},
+                    {name:'洪山区'},
+                    {name:'硚口区'}
+                ]},
+            {name:'咸宁',
+                children:[
+                    {name:'温泉'},
+                    {name:'咸安'}
+                ]},
+            {name:'仙桃'}
+        ]
+    },
+        {
+            name:'浙江',
+            children:[
+                {
+                    name:'杭州',
+                },
+                {
+                    name:'宁波'
+                }
+            ]
+        },
+        {
+            name:'北京'
+        }
+    ]
 
     export default {
         name: 'app',
@@ -227,6 +269,7 @@
                 this.source = res
                 console.log(res)
             })
+            // this.source = dd
         },
         methods:{
             inputChange(e,value){
@@ -260,6 +303,11 @@
                 ajax(this.selected2[0].id).then(res=>{
                         let selectedObj = this.source.filter(item => item.id === this.selected2[0].id)[0] //找出选择的对象
                         this.$set(selectedObj,'children',res) //把res设置成选中项的children
+                })
+            },
+            loadData({id},callback){
+                ajax(id).then(res=>{
+                    callback(res)
                 })
             }
         }

@@ -2,13 +2,13 @@
     <div class="cascader-item" :style="{height:height}">
         <div class="left">
             <div class="label" v-for="item in items" @click="onClickLabel(item)">
-                {{item.name}}
-                <icon class="icon" v-if="item.children" name="right"></icon>
+                <span class="name">{{item.name}}</span>
+                <icon class="icon" name="right" v-if="rightArrowVisible(item)"></icon>
             </div>
         </div>
         <div class="right" v-if="rightItems"><!-- 等于null时停止 也就是没有children了-->
 <!--            自己用自己 递归-->
-            <cascader-item :items="rightItems" :height="height" :level="level+1" :selected="selected" @update:selected="onUpdateSelected"></cascader-item>
+            <cascader-item :items="rightItems" :height="height" :level="level+1" :selected="selected" @update:selected="onUpdateSelected" :load-data="loadData"></cascader-item>
         </div>
     </div>
 </template>
@@ -28,19 +28,23 @@
             level:{//层级
                 type:Number,
                 default:0
-            }
+            },
+            loadData:Function
         },
         computed:{
             rightItems(){
-                let currentSelected = this.selected[this.level]//在第几层[1,2,3]就拿第几层的数据 对应下面的onClickLabel
-                if(currentSelected && currentSelected.children){ //点击了有值 并且有children
-                    return currentSelected.children
-                }else{
-                    return null
+                if(this.selected && this.selected[this.level]){
+                    let selected = this.items.filter(item=>item.name === this.selected[this.level].name)[0] //找出source中选中的当前项 return 其children
+                    if(selected && selected.children && selected.children.length > 0){ //不是一个空children
+                        return selected.children
+                    }
                 }
             }
         },
         methods:{
+            rightArrowVisible(item){
+                return this.loadData ? !item.isLeaf : item.children
+            },
             onClickLabel(item){ //1.单向数据流 2.全拷贝
                 let copy = JSON.parse(JSON.stringify(this.selected))
                 copy[this.level] = item
@@ -67,11 +71,18 @@
             border-left: 1px solid black;
         }
         .label{
-            padding: .3em 1em;
+            padding: .4em 1em;
             display: flex;
             align-items: center;
+            >.name{
+                margin-right: 2em;
+                user-select: none;
+            }
+            &:hover{
+                background: #ddd;
+            }
             .icon{
-                margin-left:1em;
+                margin-left:auto;
                 transform: scale(.5);
             }
         }
