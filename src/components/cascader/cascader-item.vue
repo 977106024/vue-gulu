@@ -65,6 +65,7 @@
         .left{
             height: 100%;
             padding: .3em 0;
+            overflow: auto;
         }
         .right {
             height: 100%;
@@ -74,6 +75,7 @@
             padding: .4em 1em;
             display: flex;
             align-items: center;
+            white-space: nowrap;
             >.name{
                 margin-right: 2em;
                 user-select: none;

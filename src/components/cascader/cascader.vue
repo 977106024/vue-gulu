@@ -1,6 +1,6 @@
 <template>
-    <div class="cascader">
-        <div class="trigger" @click="popoverVisible = !popoverVisible">
+    <div class="cascader" ref="cascader">
+        <div class="trigger" @click="toggle">
             {{result}}
         </div>
         <div class="popover" v-if="popoverVisible">
@@ -86,6 +86,30 @@
                 if(!lastItem.isLeaf){
                     this.loadData && this.loadData(lastItem,update)
                 }
+            },
+            onClickDocument({target}){
+                let {cascader} = this.$refs
+                if(cascader === target || cascader.contains(target)){return}
+                this.close()
+            },
+            open(){
+                this.popoverVisible = true
+                setTimeout(()=>{
+                    document.addEventListener('click', this.onClickDocument)
+                },0)
+                // this.$nextTick(()=> {
+                // })
+            },
+            close(){
+                this.popoverVisible = false
+                document.removeEventListener('click',this.onClickDocument)
+            },
+            toggle(){
+                if(this.popoverVisible){
+                    this.close()
+                }else{
+                    this.open()
+                }
             }
         }
     }
@@ -94,6 +118,7 @@
 <style lang="scss" scoped>
     @import '../var';
     .cascader{
+        display: inline-block;
         position:relative;
         .trigger{
             width: 250px;
@@ -107,7 +132,6 @@
             left: 0;
             background: white;
             @extend .box-shadow;
-            overflow: auto;
         }
     }
 </style>
