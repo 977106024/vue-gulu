@@ -4,6 +4,7 @@
         <p>1234445</p>
         <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
         <p>1212121212</p>
+        <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
         <p>{{source}}</p>
         <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
