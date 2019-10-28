@@ -4,7 +4,7 @@
             {{result}}
         </div>
         <div class="popover" v-if="popoverVisible">
-            <cascader-item :items="source" :height="popoverHeight" :selected="selected" @update:selected="onUpdateSelected" :loadData="loadData"></cascader-item>
+            <cascader-item :items="source" :height="popoverHeight" :selected="selected" @update:selected="onUpdateSelected" :loadData="loadData" :loading-item="loadingItem"></cascader-item>
         </div>
     </div>
 </template>
@@ -23,10 +23,11 @@
                 type:Array,
                 default:()=>[]
             },
-            loadData:Function
+            loadData:Function,
         },
         data:()=>({
             popoverVisible:false,
+            loadingItem:{}
         }),
         computed:{
             result(){
@@ -78,15 +79,17 @@
                     }
                 }
 
-                let update = (res)=>{
+                let updateSource = (res)=>{
                     //...
                     let copy = JSON.parse(JSON.stringify(this.source))
                     let toUpdate = complex(copy,lastItem.id)
                     toUpdate.children = res
                     this.$emit('update:source',copy)
+                    this.loadingItem = {}
                 }
-                if(!lastItem.isLeaf){
-                    this.loadData && this.loadData(lastItem,update)
+                if(!lastItem.isLeaf && this.loadData){
+                    this.loadData(lastItem,updateSource)
+                    this.loadingItem = lastItem
                 }
             },
             // onClickDocument({target}){
@@ -135,6 +138,7 @@
             left: 0;
             background: white;
             @extend .box-shadow;
+            z-index: 1;
         }
     }
 </style>

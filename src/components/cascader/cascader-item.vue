@@ -3,12 +3,19 @@
         <div class="left">
             <div class="label" v-for="item in items" @click="onClickLabel(item)">
                 <span class="name">{{item.name}}</span>
-                <icon class="icon" name="right" v-if="rightArrowVisible(item)"></icon>
+                <span class="icons">
+                    <template v-if="item.name === loadingItem.name">
+                        <icon class="loading" name="loading"></icon>
+                    </template>
+                    <template v-else>
+                        <icon class="icon" name="right" v-if="rightArrowVisible(item)"></icon>
+                    </template>
+                </span>
             </div>
         </div>
         <div class="right" v-if="rightItems"><!-- 等于null时停止 也就是没有children了-->
 <!--            自己用自己 递归-->
-            <cascader-item :items="rightItems" :height="height" :level="level+1" :selected="selected" @update:selected="onUpdateSelected" :load-data="loadData"></cascader-item>
+            <cascader-item :items="rightItems" :height="height" :level="level+1" :selected="selected" @update:selected="onUpdateSelected" :load-data="loadData" :loading-item="loadingItem"></cascader-item>
         </div>
     </div>
 </template>
@@ -29,7 +36,11 @@
                 type:Number,
                 default:0
             },
-            loadData:Function
+            loadData:Function,
+            loadingItem:{
+                type:Object,
+                default:()=>({})
+            }
         },
         computed:{
             rightItems(){
@@ -83,9 +94,22 @@
             &:hover{
                 background: #ddd;
             }
-            .icon{
+            .icons{
                 margin-left:auto;
-                transform: scale(.5);
+                .icon{
+                    transform: scale(.5);
+                }
+                .loading{
+                    animation: 1s spin infinite linear;
+                }
+            }
+        }
+        @keyframes spin {
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
             }
         }
     }

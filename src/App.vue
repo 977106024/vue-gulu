@@ -215,7 +215,9 @@
                     node.isLeaf = true
                 }
             })
-            success(result)
+            setTimeout(()=>{
+                success(result)
+            },2000)
         })
     }
 
@@ -306,6 +308,7 @@
                         this.$set(selectedObj,'children',res) //把res设置成选中项的children
                 })
             },
+            //动态加载数据
             loadData({id},callback){
                 ajax(id).then(res=>{
                     callback(res)
