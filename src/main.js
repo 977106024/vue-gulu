@@ -27,6 +27,8 @@ import GPopover from './components/popover'
 import GCollapse from './components/collapse/collapse'
 import GCollapseItem from './components/collapse/collapse-item'
 import GCascader from './components/cascader/cascader'
+import GSlider from './components/slider/slider'
+import GSliderItem from './components/slider/slider-item'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -49,6 +51,8 @@ Vue.component('g-popover',GPopover)
 Vue.component('g-collapse',GCollapse)
 Vue.component('g-collapse-item',GCollapseItem)
 Vue.component('g-cascader',GCascader)
+Vue.component('g-slider',GSlider)
+Vue.component('g-slider-item',GSliderItem)
 
 Vue.config.productionTip = false
 

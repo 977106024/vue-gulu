@@ -1,11 +1,26 @@
 <template>
     <div id="app">
+<!--        slider-->
+        <g-slider :selected="slideSelected">
+            <g-slider-item name="1">
+                <div class="box">1</div>
+            </g-slider-item>
+            <g-slider-item name="2">
+                <div class="box">2</div>
+            </g-slider-item>
+            <g-slider-item name="3">
+                <div class="box">3</div>
+            </g-slider-item>
+        </g-slider>
+
+
+
 <!--        <cascader-->
         <p>1234445</p>
         <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
         <p>1212121212</p>
         <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
-        <p>{{source}}</p>
+<!--        <p>{{source}}</p>-->
         <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
 <!--            <g-collapse-item title="ahong" name="1">帅哥</g-collapse-item>-->
@@ -265,7 +280,8 @@
             selectedTab:'tab1',
             selected:['1','2'],
             selected2:[],
-            source:[]
+            source:[],
+            slideSelected:'1'
         }),
         created(){
             ajax(0).then(res=>{
@@ -273,6 +289,14 @@
                 console.log(res)
             })
             // this.source = dd
+            let n = 1
+            setInterval(()=>{
+                this.slideSelected = n.toString()
+                n++
+                if(n>3){
+                    n = 1
+                }
+            },3000)
         },
         methods:{
             inputChange(e,value){
@@ -369,5 +393,11 @@
     }
     .footer{
         background: #2c3e50;
+    }
+    .box{
+        width: 250px;
+        height: 150px;
+        background: #ddd;
+        border:1px solid red;
     }
 </style>
