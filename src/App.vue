@@ -1,14 +1,14 @@
 <template>
     <div id="app">
 <!--        slider-->
-        <g-slider :selected="slideSelected">
-            <g-slider-item name="1">
+        <g-slider :selected.sync="slideSelected">
+            <g-slider-item name="你好">
                 <div class="box">1</div>
             </g-slider-item>
-            <g-slider-item name="2">
+            <g-slider-item name="小月">
                 <div class="box">2</div>
             </g-slider-item>
-            <g-slider-item name="3">
+            <g-slider-item name="柏宏">
                 <div class="box">3</div>
             </g-slider-item>
         </g-slider>
@@ -281,7 +281,7 @@
             selected:['1','2'],
             selected2:[],
             source:[],
-            slideSelected:'1'
+            slideSelected:undefined
         }),
         created(){
             ajax(0).then(res=>{
@@ -289,14 +289,14 @@
                 console.log(res)
             })
             // this.source = dd
-            let n = 1
-            setInterval(()=>{
-                this.slideSelected = n.toString()
-                n++
-                if(n>3){
-                    n = 1
-                }
-            },3000)
+            // let n = 1
+            // setInterval(()=>{
+            //     this.slideSelected = n.toString()
+            //     n++
+            //     if(n>3){
+            //         n = 1
+            //     }
+            // },3000)
         },
         methods:{
             inputChange(e,value){
@@ -395,7 +395,7 @@
         background: #2c3e50;
     }
     .box{
-        width: 250px;
+        width: 100%;
         height: 150px;
         background: #ddd;
         border:1px solid red;
