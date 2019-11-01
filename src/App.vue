@@ -398,6 +398,8 @@
         width: 100%;
         height: 150px;
         background: #ddd;
-        border:1px solid red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

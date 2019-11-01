@@ -1,5 +1,5 @@
 <template>
-    <div class="g-slides">
+    <div class="g-slides" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <div class="g-slides-window">
             <div class="g-slides-wrap">
                 <slot></slot>
@@ -22,7 +22,8 @@
         },
         data:()=>({
            childrenLength:0,
-            lastSelectedIndex:undefined
+            lastSelectedIndex:undefined,
+            timerId:undefined
         }),
         mounted() {
             this.updateChildren()
@@ -46,16 +47,27 @@
                 console.log( this.lastSelectedIndex,'没更新的值')
                 this.$emit('update:selected',this.names[n]) //更新之后 计算属性才会更新
             },
+            onMouseEnter(){
+                this.pause()
+            },
+            onMouseLeave(){
+                this.playAutomatically()
+            },
             playAutomatically(){
-                let index = this.names.indexOf(this.getSelected())
+                if(this.timerId){return}
                 let run = () => {
+                    let index = this.names.indexOf(this.getSelected())
                     let newIndex = index-1
                     if(newIndex === -1){newIndex = this.names.length -1 }
                     if(newIndex === this.names.length){ newIndex = 0 }
-                    this.$emit('update:selected',this.names[newIndex])
-                    setTimeout(run,3000)
+                    this.select(newIndex)
+                    this.timerId = setTimeout(run,3000)
                 }
-                // setTimeout(run,3000)
+                this.timerId = setTimeout(run,3000)
+            },
+            pause(){
+                window.clearTimeout(this.timerId)
+                this.timerId = undefined
             },
             getSelected(){
                 let first = this.$children[0]
@@ -76,7 +88,6 @@
 
 <style lang="scss" scoped>
     .g-slides{
-        border:2px solid green;
         &-window{
             overflow: hidden;
         }
