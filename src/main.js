@@ -4,6 +4,9 @@ import App from './App.vue'
 import '@/assets/svg'
 import plugin from './components/toast/plugin'
 
+import pdSelect from './components/pdSelect'
+Vue.use(pdSelect);
+
 Vue.use(plugin)
 
 import GButton from './components/Button'

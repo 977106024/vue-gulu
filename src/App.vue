@@ -1,5 +1,10 @@
 <template>
     <div id="app">
+<!--        滚轮-->
+        <pd-select-box style="position: fixed;bottom: 0;width: 100%">
+            <pd-select-item ref="month" :listData="listData" v-model="month"></pd-select-item>
+            <pd-select-item ref="day" :listData="listData2" type="cycle" v-model="day"></pd-select-item>
+        </pd-select-box>
 <!--        slider-->
         <g-slider :selected.sync="slideSelected">
             <g-slider-item name="你好">
@@ -281,7 +286,12 @@
             selected:['1','2'],
             selected2:[],
             source:[],
-            slideSelected:undefined
+            slideSelected:undefined,
+
+            listData: Array.from({length: 12}, (value, index) => 1 + index),
+            listData2: Array.from({length: 30}, (value, index) => 'customValue' + index),
+            month: 100,
+            day: 'customValue15'
         }),
         created(){
             ajax(0).then(res=>{
@@ -298,7 +308,17 @@
             //     }
             // },3000)
         },
+        mounted(){
+            setTimeout(()=>{
+                //验证 model 联动
+                this.after()
+            },3000)
+        },
         methods:{
+            after () {
+                this.day = 'customValue0'
+                this.$refs.day.init()
+            },
             inputChange(e,value){
                 console.log(1,e,value);
             },
