@@ -37,6 +37,11 @@
             left: 0;
             border: 1px solid black;
             white-space: nowrap;
+
+           .g-sub-nav .g-sub-nav-popover {
+                top: -20%;
+                left: 100%;
+            }
         }
     }
 </style>
