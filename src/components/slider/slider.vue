@@ -44,7 +44,6 @@
         methods:{
             select(n){
                 this.lastSelectedIndex = this.selectedIndex //$emit更新前 保存上次的值index
-                console.log( this.lastSelectedIndex,'没更新的值')
                 this.$emit('update:selected',this.names[n]) //更新之后 计算属性才会更新
             },
             onMouseEnter(){

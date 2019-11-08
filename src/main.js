@@ -32,6 +32,9 @@ import GCollapseItem from './components/collapse/collapse-item'
 import GCascader from './components/cascader/cascader'
 import GSlider from './components/slider/slider'
 import GSliderItem from './components/slider/slider-item'
+import GNav from './components/nav/nav'
+import GNavItem from './components/nav/nav-item'
+import GSubNav from './components/nav/sub-nav'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -56,6 +59,9 @@ Vue.component('g-collapse-item',GCollapseItem)
 Vue.component('g-cascader',GCascader)
 Vue.component('g-slider',GSlider)
 Vue.component('g-slider-item',GSliderItem)
+Vue.component('g-nav',GNav)
+Vue.component('g-nav-item',GNavItem)
+Vue.component('g-sub-nav',GSubNav)
 
 Vue.config.productionTip = false
 

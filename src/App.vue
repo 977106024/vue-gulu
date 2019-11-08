@@ -1,5 +1,12 @@
 <template>
     <div id="app">
+<!--        nav-->
+        <g-nav :selected.sync="selectedNav">
+            <g-nav-item name="home">首页</g-nav-item>
+            <g-nav-item name="about">关于</g-nav-item>
+            <g-nav-item name="hire">招聘</g-nav-item>
+        </g-nav>
+
 <!--        滚轮-->
         <pd-select-box style="position: fixed;bottom: 0;width: 100%">
             <pd-select-item ref="month" :listData="listData" v-model="month"></pd-select-item>
@@ -287,6 +294,7 @@
             selected2:[],
             source:[],
             slideSelected:undefined,
+            selectedNav:['home'],
 
             listData: Array.from({length: 12}, (value, index) => 1 + index),
             listData2: Array.from({length: 30}, (value, index) => 'customValue' + index),
