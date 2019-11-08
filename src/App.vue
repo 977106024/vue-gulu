@@ -3,35 +3,40 @@
 <!--        nav-->
         <g-nav :selected.sync="selectedNav">
             <g-nav-item name="home">首页</g-nav-item>
-            <g-nav-item name="about">关于</g-nav-item>
+            <g-sub-nav>
+                <template slot="title">关于</template>
+                <g-nav-item name="about1">企业文化</g-nav-item>
+                <g-nav-item name="about2">开发团队</g-nav-item>
+                <g-nav-item name="about3">联系电话</g-nav-item>
+            </g-sub-nav>
             <g-nav-item name="hire">招聘</g-nav-item>
         </g-nav>
 
 <!--        滚轮-->
-        <pd-select-box style="position: fixed;bottom: 0;width: 100%">
-            <pd-select-item ref="month" :listData="listData" v-model="month"></pd-select-item>
-            <pd-select-item ref="day" :listData="listData2" type="cycle" v-model="day"></pd-select-item>
-        </pd-select-box>
-<!--        slider-->
-        <g-slider :selected.sync="slideSelected">
-            <g-slider-item name="你好">
-                <div class="box">1</div>
-            </g-slider-item>
-            <g-slider-item name="小月">
-                <div class="box">2</div>
-            </g-slider-item>
-            <g-slider-item name="柏宏">
-                <div class="box">3</div>
-            </g-slider-item>
-        </g-slider>
+<!--        <pd-select-box style="position: fixed;bottom: 0;width: 100%">-->
+<!--            <pd-select-item ref="month" :listData="listData" v-model="month"></pd-select-item>-->
+<!--            <pd-select-item ref="day" :listData="listData2" type="cycle" v-model="day"></pd-select-item>-->
+<!--        </pd-select-box>-->
+<!--&lt;!&ndash;        slider&ndash;&gt;-->
+<!--        <g-slider :selected.sync="slideSelected">-->
+<!--            <g-slider-item name="你好">-->
+<!--                <div class="box">1</div>-->
+<!--            </g-slider-item>-->
+<!--            <g-slider-item name="小月">-->
+<!--                <div class="box">2</div>-->
+<!--            </g-slider-item>-->
+<!--            <g-slider-item name="柏宏">-->
+<!--                <div class="box">3</div>-->
+<!--            </g-slider-item>-->
+<!--        </g-slider>-->
 
 
 
 <!--        <cascader-->
-        <p>1234445</p>
-        <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
-        <p>1212121212</p>
-        <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>
+<!--        <p>1234445</p>-->
+<!--        <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>-->
+<!--        <p>1212121212</p>-->
+<!--        <g-cascader :source.sync="source" popover-height="300px" :selected.sync="selected2" :load-data="loadData"></g-cascader>-->
 <!--        <p>{{source}}</p>-->
         <!--        手风琴-->
 <!--        <g-collapse single :selected.sync="selected">-->
@@ -317,10 +322,10 @@
             // },3000)
         },
         mounted(){
-            setTimeout(()=>{
-                //验证 model 联动
-                this.after()
-            },3000)
+            // setTimeout(()=>{
+            //     //验证 model 联动
+            //     this.after()
+            // },3000)
         },
         methods:{
             after () {

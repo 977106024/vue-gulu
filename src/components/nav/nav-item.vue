@@ -7,6 +7,7 @@
 <script>
     export default {
         name: "guluNavItem",
+        inject:['root'],
         props:{
             name:{
                 type:[String,Number],
@@ -16,6 +17,9 @@
         data:()=>({
             selected:false
         }),
+        created(){
+          this.root(this)
+        },
         methods:{
             onClick(){
                 this.$emit('add:selected',this.name)

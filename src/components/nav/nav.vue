@@ -7,6 +7,11 @@
 <script>
     export default {
         name: "guluNav",
+        provide(){
+            return {
+                root: this.addItem
+            }
+        },
         props:{
             selected:{
                 type:Array,
@@ -17,19 +22,21 @@
                 default:false
             }
         },
+        data:()=>({
+           items:[]
+        }),
         mounted() {
+            console.log(this.items);
             this.updateChildren()
             this.listenToChildren()
         },
         updated(){
            this.updateChildren()
         },
-        computed:{
-            items(){
-                return this.$children.filter(vm=>vm.$options.name === 'guluNavItem')
-            }
-        },
         methods:{
+            addItem(vm){
+                this.items.push(vm)
+            },
             updateChildren(){
                 this.items.forEach(vm=>{
                     if(this.selected.indexOf(vm.name) >= 0){
