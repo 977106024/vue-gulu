@@ -6,7 +6,7 @@
                 <g-icon name="right"></g-icon>
             </span>
         </span>
-        <transition name="x">
+        <transition name="x" @enter="enter" @after-enter="afterEnter" @leave="leave" @after-leave="afterLeave">
             <div class="g-sub-nav-popover" :class="{vertical}" v-show="open">
                 <slot></slot>
             </div>
@@ -44,7 +44,32 @@
             },
             close(){
                 this.open = false
+            },
+            enter(el,done){
+                let {height} = el.getBoundingClientRect()
+                el.style.height = 0 //获取完初始化0
+                el.getBoundingClientRect() //迫使浏览器渲染
+                el.style.height = `${height}px` //设置高度 打开
+                el.addEventListener('transitionend',()=>{ //等动画结束再done
+                    done()
+                })
+            },
+            afterEnter(el) {
+                el.style.height = 'auto'
+            },
+            leave(el,done){
+                    let {height} = el.getBoundingClientRect()
+                    el.style.height = `${height}px`
+                    el.getBoundingClientRect()
+                    el.style.height = 0
+                    el.addEventListener('transitionend',()=>{
+                        done()
+                    })
+            },
+            afterLeave(el){
+                el.style.height = 'auto'
             }
+
         }
     }
 </script>
@@ -68,15 +93,17 @@
             margin-top: 1px;
             box-shadow: 0 0 3px fade_out(black,.8);
             border-radius:4px;
-           .g-sub-nav .g-sub-nav-popover {
-                top: -20%;
-                left: 100%;
-            }
+            transition:height 1s;
             &.vertical{
                 position:static;
                 box-shadow: none;
+                overflow: hidden;
             }
 
+        }
+        .g-sub-nav-popover {
+            top: 0;
+            left: 100%;
         }
         &.active{
             &::after{
@@ -99,12 +126,6 @@
                     transform: rotate(180deg);
                 }
             }
-        }
-        .x-enter,.x-leave-to{
-            height: 100%;
-        }
-        .x-enter-active,.x-leave-active{
-            transition: all 2s;
         }
     }
 </style>
