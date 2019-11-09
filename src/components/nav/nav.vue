@@ -23,7 +23,8 @@
             }
         },
         data:()=>({
-           items:[]
+            items:[],
+            namePath:[]
         }),
         mounted() {
             console.log(this.items);
@@ -66,9 +67,8 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .g-nav{
-        border:1px solid red;
         display:flex;
     }
 </style>

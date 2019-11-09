@@ -1,17 +1,17 @@
 <template>
     <div id="app">
 <!--        nav-->
-        <g-nav :selected.sync="selectedNav">
+        <g-nav :selected.sync="selectedNav" vertical style="width:200px">
             <g-nav-item name="home">首页</g-nav-item>
-            <g-sub-nav>
+            <g-sub-nav name="about">
                 <template slot="title">关于</template>
                 <g-nav-item name="about1">企业文化</g-nav-item>
                 <g-nav-item name="about2">开发团队</g-nav-item>
-                <g-sub-nav>
+                <g-sub-nav name="tel">
                     <template slot="title">联系电话</template>
                     <g-nav-item name="wechat">微信</g-nav-item>
                     <g-nav-item name="qq">qq</g-nav-item>
-                    <g-sub-nav>
+                    <g-sub-nav name="ccc">
                         <template slot="title">手机</template>
                         <g-nav-item name="yidong">移动</g-nav-item>
                         <g-nav-item name="liantong">联通</g-nav-item>
@@ -243,25 +243,25 @@
 </template>
 
 <script>
-    import db from '@/assets/db'
+    // import db from '@/assets/db'
 
     //模拟数据加载
-    function ajax(parentId=0){
-        return new Promise((success,fail)=>{
-            let result = db.filter(item => item.parent_id == parentId) //filter总是返回数组
-            result.forEach(node =>{
-                let children = db.filter(item=>item.parent_id === node.id) //根据数据结构来看 id === parent_id有的话 就说明有children
-                if(children.length > 0){
-                    node.isLeaf = false //然后children里面还有值 就是没到叶子
-                }else{
-                    node.isLeaf = true
-                }
-            })
-            setTimeout(()=>{
-                success(result)
-            },2000)
-        })
-    }
+    // function ajax(parentId=0){
+    //     return new Promise((success,fail)=>{
+    //         let result = db.filter(item => item.parent_id == parentId) //filter总是返回数组
+    //         result.forEach(node =>{
+    //             let children = db.filter(item=>item.parent_id === node.id) //根据数据结构来看 id === parent_id有的话 就说明有children
+    //             if(children.length > 0){
+    //                 node.isLeaf = false //然后children里面还有值 就是没到叶子
+    //             }else{
+    //                 node.isLeaf = true
+    //             }
+    //         })
+    //         setTimeout(()=>{
+    //             success(result)
+    //         },2000)
+    //     })
+    // }
 
     const dd = [{
         name:'湖北',
@@ -317,11 +317,11 @@
             day: 'customValue15'
         }),
         created(){
-            ajax(0).then(res=>{
-                this.source = res
-                console.log(res)
-            })
-            // this.source = dd
+            // ajax(0).then(res=>{
+            //     this.source = res
+            //     console.log(res)
+            // })
+            this.source = dd
             // let n = 1
             // setInterval(()=>{
             //     this.slideSelected = n.toString()
@@ -369,18 +369,18 @@
                     // autoCloseDelay: 55
                 })
             },
-            xxx(){
-                ajax(this.selected2[0].id).then(res=>{
-                        let selectedObj = this.source.filter(item => item.id === this.selected2[0].id)[0] //找出选择的对象
-                        this.$set(selectedObj,'children',res) //把res设置成选中项的children
-                })
-            },
+            // xxx(){
+            //     ajax(this.selected2[0].id).then(res=>{
+            //             let selectedObj = this.source.filter(item => item.id === this.selected2[0].id)[0] //找出选择的对象
+            //             this.$set(selectedObj,'children',res) //把res设置成选中项的children
+            //     })
+            // },
             //动态加载数据
-            loadData({id},callback){
-                ajax(id).then(res=>{
-                    callback(res)
-                })
-            }
+            // loadData({id},callback){
+            //     ajax(id).then(res=>{
+            //         callback(res)
+            //     })
+            // }
         }
     }
 </script>
