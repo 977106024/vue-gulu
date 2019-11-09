@@ -1,5 +1,5 @@
 <template>
-    <div class="g-nav">
+    <div class="g-nav" :class="{vertical}">
         <slot></slot>
     </div>
 </template>
@@ -9,7 +9,8 @@
         name: "guluNav",
         provide(){
             return {
-                root: this.addItem
+                root: this,
+                vertical:this.vertical
             }
         },
         props:{
@@ -18,6 +19,10 @@
                 default:() => []
             },
             multiple:{
+                type:Boolean,
+                default:false
+            },
+            vertical:{
                 type:Boolean,
                 default:false
             }
@@ -70,5 +75,11 @@
 <style lang="scss" scoped>
     .g-nav{
         display:flex;
+        border-bottom: 1px solid #ccc;
+        user-select: none;
+        &.vertical{
+            flex-direction: column;
+            border: 1px solid #ccc;
+         }
     }
 </style>
