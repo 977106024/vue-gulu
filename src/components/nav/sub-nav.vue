@@ -1,8 +1,8 @@
 <template>
-    <div class="g-sub-nav" :class="{active}" v-click-outside="close">
+    <div class="g-sub-nav" :class="{active,vertical}" v-click-outside="close">
         <span class="g-sub-nav-label" @click="onClick">
             <slot name="title"></slot>
-            <span class="g-sub-nav-icon" :class="{open}">
+            <span class="g-sub-nav-icon" :class="{open,vertical}">
                 <g-icon name="right"></g-icon>
             </span>
         </span>
@@ -105,7 +105,7 @@
             top: 0;
             left: 100%;
         }
-        &.active{
+        &.active:not(.vertical){
             &::after{
                 content: '';
                 width: 100%;
@@ -122,6 +122,12 @@
             .g-sub-nav-icon{
                 display: inline-block;
                 transition:transform 250ms;
+                &.vertical{
+                    transform: rotate(90deg);
+                    &.open{
+                        transform: rotate(270deg);
+                    }
+                }
                 &.open{
                     transform: rotate(180deg);
                 }
