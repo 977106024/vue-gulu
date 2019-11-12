@@ -9,6 +9,19 @@ Vue.use(pdSelect);
 
 Vue.use(plugin)
 
+import Validator from './components/validate'
+let data = {
+  email:'1qq'
+}
+let rules = [{key:'email',pattern:/^.+@.+$/,minLength:4,aaa:0}]
+let validator = new Validator()
+Validator.add('aaa',(value)=>{
+  if(value !== 0){
+    return '确实等于0'
+  }
+})
+validator.validate(data,rules)
+
 import GButton from './components/Button'
 import GIcon from './components/Icon'
 import ButtonGroup from './components/button-group'
