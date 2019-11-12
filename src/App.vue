@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 <!--        nav-->
-        <g-nav :selected.sync="selectedNav" vertical style="width:200px">
+        <g-nav :selected.sync="selectedNav" @update:selected="onChange" vertical style="width:200px">
             <g-nav-item name="home">首页</g-nav-item>
             <g-sub-nav name="about">
                 <template slot="title">关于</template>
@@ -309,7 +309,7 @@
             selected2:[],
             source:[],
             slideSelected:undefined,
-            selectedNav:['home'],
+            selectedNav:'home',
 
             listData: Array.from({length: 12}, (value, index) => 1 + index),
             listData2: Array.from({length: 30}, (value, index) => 'customValue' + index),
@@ -338,6 +338,9 @@
             // },3000)
         },
         methods:{
+            onChange(selected){
+                console.log(selected)
+            },
             after () {
                 this.day = 'customValue0'
                 this.$refs.day.init()
