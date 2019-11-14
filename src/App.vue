@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 <!--        pager-->
-        <g-pager :total-page="20" :current-page="1" style="margin-bottom: 50px"></g-pager>
+        <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
         <g-nav :selected.sync="selectedNav" @update:selected="onChange" vertical style="width:200px">
             <g-nav-item name="home">首页</g-nav-item>
@@ -316,7 +316,9 @@
             listData: Array.from({length: 12}, (value, index) => 1 + index),
             listData2: Array.from({length: 30}, (value, index) => 'customValue' + index),
             month: 100,
-            day: 'customValue15'
+            day: 'customValue15',
+
+            currentPage:1
         }),
         created(){
             // ajax(0).then(res=>{
