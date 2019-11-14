@@ -1,8 +1,22 @@
 <template>
     <div class="g-pager">
-        <span v-for="page of pages" class="g-pager-item"
-        :class="{active:page === currentPage,separator: page === '...'}">
-            {{page}}
+        <span class="g-pager-nav prev" :class="{disabled:currentPage === 1}">
+            <g-icon name="left"></g-icon>
+        </span>
+        <template v-for="page of pages">
+            <template v-if="page === currentPage">
+                <span class="g-pager-item current">{{page}}</span>
+            </template>
+            <template v-else-if="separator === '...'">
+<!--                <icon name="dian"></icon> 使用remplate来使用各种标签-->
+                <span class="g-pager-item separator">...</span>
+            </template>
+            <template v-else>
+                <a class="g-pager-item other">{{page}}</a>
+            </template>
+        </template>
+        <span class="g-pager-nav next" :class="{disabled:currentPage === totalPage.length-1}">
+            <g-icon name="right"></g-icon>
         </span>
     </div>
 </template>
@@ -29,11 +43,12 @@
             pages:''
         }),
         created(){
-            //1.排序 2.去重 3.插入...
+            //0.过滤(-1 0 最大数+1) 1.排序  2.去重 3.插入...
             this.pages = this.unique([1, this.totalPage,
                 this.currentPage,
                 this.currentPage -1,this.currentPage -2,
                 this.currentPage+1,this.currentPage+2]
+                .filter(n=> n>=1 && n <= this.totalPage)
                 .sort((a,b)=>a-b))
                 .reduce((prev,current,index,array)=>{
                     prev.push(current)
@@ -50,7 +65,12 @@
 </script>
 
 <style lang="scss" scoped>
+    $width:20px;
+    $height:20px;
     .g-pager{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         &-item{
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -59,14 +79,32 @@
             justify-content: center;
             align-items: center;
             font-size: 12px;
-            min-width: 20px;
-            height: 20px;
+            min-width: $width;
+            height: $height;
             margin:0 4px;
             &.separator{
                 border: none;
             }
-            &.active,&:hover{
+            &.current,&:hover{
                 border-color:blue;
+                cursor: pointer;
+            }
+            &.current{
+                cursor: default;
+            }
+        }
+        &-nav{
+            width: $width;
+            height: $height;
+            border-radius: 4px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            background: #ccc;
+            &.disabled{
+                svg{
+                    fill:darken(#ccc,30%);
+                }
             }
         }
     }
