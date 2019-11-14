@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+<!--        pager-->
+        <g-pager :total-page="20" :current-page="5" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
         <g-nav :selected.sync="selectedNav" @update:selected="onChange" vertical style="width:200px">
             <g-nav-item name="home">首页</g-nav-item>
