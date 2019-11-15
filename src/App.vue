@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+<!--        table-->
+        <g-table :data="tableData" :columns="columns"></g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -318,7 +320,54 @@
             month: 100,
             day: 'customValue15',
 
-            currentPage:1
+            currentPage:1,
+
+            tableData:[
+                {
+                    key: '1',
+                    name: '胡彦斌',
+                    age: 32,
+                    address: '西湖区湖底公园1号',
+                },
+                {
+                    key: '2',
+                    name: '胡彦祖',
+                    age: 42,
+                    address: '西湖区湖底公园1号',
+                },{
+                    key: '2',
+                    name: '胡彦祖',
+                    age: 42,
+                    address: '西湖区湖底公园1号',
+                },{
+                    key: '2',
+                    name: '胡彦祖',
+                    age: 42,
+                    address: '西湖区湖底公园1号',
+                },{
+                    key: '2',
+                    name: '胡彦祖',
+                    age: 42,
+                    address: '西湖区湖底公园1号',
+                },
+            ],
+            columns: [
+                {
+                    title: '姓名',
+                    dataIndex: 'name',
+                    key: 'name',
+                },
+                {
+                    title: '年龄',
+                    dataIndex: 'age',
+                    key: 'age',
+                },
+                {
+                    title: '住址',
+                    dataIndex: 'address',
+                    key: 'address',
+                },
+            ]
         }),
         created(){
             // ajax(0).then(res=>{

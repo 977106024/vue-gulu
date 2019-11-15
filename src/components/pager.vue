@@ -60,6 +60,7 @@
         },
         computed:{
           pages(){
+              //1.去重 2.过滤(-1 0 最大数+1) 3.排序 4.插入 ...
               return this.unique([1, this.totalPage,
                   this.currentPage,
                   this.currentPage -1,this.currentPage -2,
@@ -75,7 +76,12 @@
         },
         methods:{
             unique(array){
-                return [...new Set(array)]
+                // return [...new Set(array)]
+                let obj = {}
+                array.map(n=>{
+                    obj[n] = true
+                })
+                return Object.keys(obj).map(n=>parseInt(n))
             },
             onClickPage(n){
                 if(n >=1 && n <= this.totalPage){
@@ -90,6 +96,7 @@
     $width:20px;
     $height:20px;
     .g-pager{
+        user-select: none;
         &.hide{
             display: none;
         }
