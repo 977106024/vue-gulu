@@ -1,7 +1,8 @@
 <template>
     <div id="app">
 <!--        table-->
-        <g-table :data="tableData" :columns="columns"></g-table>
+        {{tableChecked}}
+        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked"></g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -324,30 +325,29 @@
 
             tableData:[
                 {
-                    key: '1',
+                    id: '1',
                     name: '胡彦斌',
                     age: 32,
                     address: '西湖区湖底公园1号',
-                },
-                {
-                    key: '2',
+                },{
+                    id: '2',
                     name: '胡彦祖',
                     age: 42,
                     address: '西湖区湖底公园1号',
                 },{
-                    key: '2',
+                    id: '3',
                     name: '胡彦祖',
                     age: 42,
                     address: '西湖区湖底公园1号',
                 },{
-                    key: '2',
+                    id: '4',
                     name: '胡彦祖',
                     age: 42,
                     address: '西湖区湖底公园1号',
                 },{
-                    key: '2',
+                    id: '5',
                     name: '胡彦祖',
-                    age: 42,
+                    age: 46,
                     address: '西湖区湖底公园1号',
                 },
             ],
@@ -367,7 +367,9 @@
                     dataIndex: 'address',
                     key: 'address',
                 },
-            ]
+            ],
+
+            tableChecked:[]
         }),
         created(){
             // ajax(0).then(res=>{
@@ -391,6 +393,14 @@
             // },3000)
         },
         methods:{
+            onChangeCheck({selected,index,val}){
+                if(selected){
+                    this.tableChecked.push(val)
+                }else{
+                    let valIndex = this.tableChecked.indexOf(val)
+                    this.tableChecked.splice(valIndex,1)
+                }
+            },
             onChange(selected){
                 console.log(selected)
             },
