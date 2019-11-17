@@ -2,7 +2,7 @@
     <div id="app">
 <!--        table-->
         {{tableChecked}}
-        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked"></g-table>
+        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData"></g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -342,7 +342,7 @@
                 },{
                     id: '4',
                     name: '胡彦祖',
-                    age: 42,
+                    age: 55,
                     address: '西湖区湖底公园1号',
                 },{
                     id: '5',
@@ -368,8 +368,10 @@
                     key: 'address',
                 },
             ],
-
-            tableChecked:[]
+            tableChecked:[],
+            orderBy:{
+               name:true, age:'asc'
+            }
         }),
         created(){
             // ajax(0).then(res=>{
@@ -393,6 +395,10 @@
             // },3000)
         },
         methods:{
+            loadData(){
+                console.log('请求排序数据')
+                this.tableData = this.tableData.map(item=>item).sort((a,b)=>a.age-b.age)
+            },
             onChangeCheck({selected,index,val}){
                 if(selected){
                     this.tableChecked.push(val)

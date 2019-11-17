@@ -1,11 +1,19 @@
 <template>
-    <div>
+    <div class="table-wrap">
         <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}">
             <thead>
             <tr>
                 <th><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
                 <th v-if="numberVisible">#</th>
-                <th v-for="item in columns">{{item.title}}</th>
+                <th v-for="item in columns">
+                    <div class="g-table-header">
+                        {{item.title}}
+                        <span v-if="item.key in orderBy" class="g-table-sorter" @click="changeOrder(item.key)">
+                            <g-icon name="left" :class="{active:orderBy[item.key] === 'asc' ? true : false}"></g-icon>
+                            <g-icon name="right" :class="{active:orderBy[item.key] === 'desc' ? true : false}"></g-icon>
+                        </span>
+                    </div>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +28,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="g-table-loading">
+            <g-icon name="loading"></g-icon>
+        </div>
     </div>
 </template>
 
@@ -57,6 +68,14 @@
             selectedItems:{
                 type:Array,
                 default:()=>[]
+            },
+            orderBy:{
+                type:Object,
+                default:()=>({})
+            },
+            loading:{
+                type:Boolean,
+                default:false
             }
         },
         computed:{
@@ -90,8 +109,19 @@
                 this.$emit('update:selectedItems',selected ? this.data : [])
             },
             inSelectedItems(item){
-                console.log( this.selectedItems.filter(n=>n.id === item.id),'啊啊')
                 return this.selectedItems.filter(n=>n.id === item.id).length > 0
+            },
+            changeOrder(key){
+                let copy = JSON.parse(JSON.stringify(this.orderBy))
+                let oldValue = copy[key]
+                if(oldValue === 'asc'){//1.升序 2.降序 3.不排序
+                    copy[key] = 'desc'
+                }else if(oldValue === 'desc'){
+                    copy[key] = true
+                }else{
+                    copy[key] = 'asc'
+                }
+                this.$emit('update:orderBy',copy)
             }
         },
         watch:{
@@ -107,12 +137,20 @@
 </script>
 
 <style lang="scss" scoped>
+    @import 'var';
     .g-table{
             width: 100%;
             text-align: left;
             border-bottom: 1px solid #ccc;
             border-collapse: collapse;
             border-spacing: 0;
+            &-header{
+                .g-table-sorter{
+                    >.active{
+                        color:red;
+                    }
+                }
+            }
             &.bordered{
                 border:1px solid #ccc;
                 td,th{
@@ -138,5 +176,22 @@
                 border-bottom:1px solid #ccc;
                 padding: 8px;
             }
+        &-loading{
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(255,255,255,.8);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg{
+                @include spin;
+            }
+        }
+    }
+    .table-wrap{
+        position: relative;
     }
 </style>
