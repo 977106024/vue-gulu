@@ -3,7 +3,7 @@
         <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}">
             <thead>
             <tr>
-                <th><input type="checkbox" @click="onChangeCheckAll" ref="allChecked"></th>
+                <th><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
                 <th v-if="numberVisible">#</th>
                 <th v-for="item in columns">{{item.title}}</th>
             </tr>
@@ -60,7 +60,19 @@
             }
         },
         computed:{
-
+            areAllItemsSelected(){
+                const data = this.data.map(item=>item.id).sort()
+                const selectedItems = this.selectedItems.map(item=>item.id).sort()
+                if(data.length !== selectedItems.length)return
+                let equal = true
+                for(let i = 0;i<data.length;i++){
+                    if(data[i].id !== selectedItems[i].id){
+                        equal = false
+                        break
+                    }
+                }
+                return equal
+            }
         },
         methods:{
             onChangeCheck(val,index,e){
