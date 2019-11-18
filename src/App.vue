@@ -2,7 +2,7 @@
     <div id="app">
 <!--        table-->
         {{tableChecked}}
-        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData" :loading="loading"></g-table>
+        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData" :loading="loading" height="400px" bordered></g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -346,6 +346,41 @@
                     address: '西湖区湖底公园1号',
                 },{
                     id: '5',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '6',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '7',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '8',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '9',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '10',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '11',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '12',
                     name: '胡彦祖',
                     age: 46,
                     address: '西湖区湖底公园1号',

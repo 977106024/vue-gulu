@@ -1,22 +1,23 @@
 <template>
-    <div class="table-wrap">
-        <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}">
-            <thead>
-            <tr>
-                <th><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
-                <th v-if="numberVisible">#</th>
-                <th v-for="item in columns">
-                    <div class="g-table-header">
-                        {{item.title}}
-                        <span v-if="item.key in orderBy" class="g-table-sorter" @click="changeOrder(item.key)">
+    <div class="table-wrap" ref="wrap">
+        <div :style="{height,overflow:'auto'}">
+            <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}" ref="table">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
+                    <th v-if="numberVisible">#</th>
+                    <th v-for="item in columns">
+                        <div class="g-table-header">
+                            {{item.title}}
+                            <span v-if="item.key in orderBy" class="g-table-sorter" @click="changeOrder(item.key)">
                             <g-icon name="left" :class="{active:orderBy[item.key] === 'asc' ? true : false}"></g-icon>
                             <g-icon name="right" :class="{active:orderBy[item.key] === 'desc' ? true : false}"></g-icon>
                         </span>
-                    </div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
                 <tr v-for="(item,index) in data" :key="item.id">
                     <td @click="onChangeCheck(item,index,$event)">
                         <input type="checkbox" :checked="inSelectedItems(item)">
@@ -26,8 +27,10 @@
                         <td :key="column.key">{{item[column.key]}}</td>
                     </template>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
         <div v-if="loading" class="g-table-loading">
             <g-icon name="loading"></g-icon>
         </div>
@@ -76,7 +79,23 @@
             loading:{
                 type:Boolean,
                 default:false
+            },
+            height:{
+                type:[Number,String]
             }
+        },
+        mounted(){
+            let table2 = this.$refs.table.cloneNode(true)//copy一个table
+            this.table2 = table2
+            table2.classList.add('g-table-copy')
+            this.$refs.wrap.appendChild(table2)
+            this.updateHeadersWidth()
+            this.onWindowResize = () => this.updateHeadersWidth
+            window.addEventListener('resize',this.onWindowResize)
+        },
+        beforeDestroy(){
+            removeEventListener('resize',this.onWindowResize)
+            this.table2.remove()
         },
         computed:{
             areAllItemsSelected(){
@@ -122,6 +141,22 @@
                     copy[key] = 'asc'
                 }
                 this.$emit('update:orderBy',copy)
+            },
+            updateHeadersWidth(){
+                let table2 = this.table2
+                let tableHeader = Array.from(this.$refs.table.children).filter(node=>node.tagName.toLowerCase() === 'thead')[0] //原本的thead
+                let tableHeader2
+                Array.from(table2.children).map(node=>{ //只留下表头 其他删除
+                    if(node.tagName.toLowerCase() != 'thead'){
+                        node.remove()
+                    }else{
+                        tableHeader2 = node //copy的header
+                    }
+                })
+                Array.from(tableHeader.children[0].children).map((th,i)=>{//把thead原本的宽度 给copy
+                    let {width} = th.getBoundingClientRect()
+                    tableHeader2.children[0].children[i].style.width = width + 'px'
+                })
             }
         },
         watch:{
@@ -193,5 +228,11 @@
     }
     .table-wrap{
         position: relative;
+        .g-table-copy{
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white;
+        }
     }
 </style>
