@@ -384,6 +384,21 @@
                     name: '胡彦祖',
                     age: 46,
                     address: '西湖区湖底公园1号',
+                },{
+                    id: '13',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '14',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
+                },{
+                    id: '15',
+                    name: '胡彦祖',
+                    age: 46,
+                    address: '西湖区湖底公园1号',
                 },
             ],
             columns: [
@@ -391,16 +406,19 @@
                     title: '姓名',
                     dataIndex: 'name',
                     key: 'name',
+                    width:100
                 },
                 {
                     title: '年龄',
                     dataIndex: 'age',
                     key: 'age',
+                    width:100
                 },
                 {
                     title: '住址',
                     dataIndex: 'address',
                     key: 'address',
+                    width:100
                 },
             ],
             tableChecked:[],

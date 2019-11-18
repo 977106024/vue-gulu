@@ -4,9 +4,9 @@
             <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}" ref="table">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
-                    <th v-if="numberVisible">#</th>
-                    <th v-for="item in columns">
+                    <th :style="{width:'50px'}"><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
+                    <th :style="{width:'50px'}" v-if="numberVisible">#</th>
+                    <th :style="{width:item.width + 'px'}" v-for="item in columns">
                         <div class="g-table-header">
                             {{item.title}}
                             <span v-if="item.key in orderBy" class="g-table-sorter" @click="changeOrder(item.key)">
@@ -19,12 +19,12 @@
                 </thead>
                 <tbody>
                 <tr v-for="(item,index) in data" :key="item.id">
-                    <td @click="onChangeCheck(item,index,$event)">
+                    <td :style="{width:'50px'}" @click="onChangeCheck(item,index,$event)">
                         <input type="checkbox" :checked="inSelectedItems(item)">
                     </td>
-                    <td v-if="numberVisible">{{index+1}}</td>
+                    <td :style="{width:'50px'}" v-if="numberVisible">{{index+1}}</td>
                     <template v-for="column in columns">
-                        <td :key="column.key">{{item[column.key]}}</td>
+                        <td :style="{width:column.width + 'px'}" :key="column.key">{{item[column.key]}}</td>
                     </template>
                 </tr>
                 </tbody>
@@ -85,9 +85,10 @@
             }
         },
         mounted(){
-            let table2 = this.$refs.table.cloneNode(true)//copy一个table
+            let table2 = this.$refs.table.cloneNode(false)//false 不copy子元素
             this.table2 = table2
             table2.classList.add('g-table-copy')
+            table2.appendChild(this.$refs.table.children[0])
             this.$refs.wrap.appendChild(table2)
             this.updateHeadersWidth()
             this.onWindowResize = () => this.updateHeadersWidth
