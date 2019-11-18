@@ -1,6 +1,6 @@
 <template>
-    <div class="table-wrap" ref="wrap">
-        <div :style="{height,overflow:'auto'}">
+    <div class="g-table-wrap" ref="wrap">
+        <div :style="{height,overflow:'auto'}" ref="tableWrap">
             <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}" ref="table">
                 <thead>
                 <tr>
@@ -81,21 +81,23 @@
                 default:false
             },
             height:{
-                type:[Number,String]
+                type:Number
             }
         },
         mounted(){
             let table2 = this.$refs.table.cloneNode(false)//false 不copy子元素
             this.table2 = table2
             table2.classList.add('g-table-copy')
-            table2.appendChild(this.$refs.table.children[0])
+            let tHead = this.$refs.table.children[0]
+            let {height} = tHead.getBoundingClientRect()
+            this.$refs.tableWrap.style.marginTop = height + 'px' //处理滚动条细节 上端滚动到里面去
+            this.$refs.tableWrap.style.height = this.height - height + 'px' //height要减去滚动条处理的marginTop 才是用户传值的400px
+            table2.appendChild(tHead)
             this.$refs.wrap.appendChild(table2)
-            this.updateHeadersWidth()
-            this.onWindowResize = () => this.updateHeadersWidth
-            window.addEventListener('resize',this.onWindowResize)
+
         },
         beforeDestroy(){
-            removeEventListener('resize',this.onWindowResize)
+
             this.table2.remove()
         },
         computed:{
@@ -142,22 +144,6 @@
                     copy[key] = 'asc'
                 }
                 this.$emit('update:orderBy',copy)
-            },
-            updateHeadersWidth(){
-                let table2 = this.table2
-                let tableHeader = Array.from(this.$refs.table.children).filter(node=>node.tagName.toLowerCase() === 'thead')[0] //原本的thead
-                let tableHeader2
-                Array.from(table2.children).map(node=>{ //只留下表头 其他删除
-                    if(node.tagName.toLowerCase() != 'thead'){
-                        node.remove()
-                    }else{
-                        tableHeader2 = node //copy的header
-                    }
-                })
-                Array.from(tableHeader.children[0].children).map((th,i)=>{//把thead原本的宽度 给copy
-                    let {width} = th.getBoundingClientRect()
-                    tableHeader2.children[0].children[i].style.width = width + 'px'
-                })
             }
         },
         watch:{
@@ -227,8 +213,9 @@
             }
         }
     }
-    .table-wrap{
+    .g-table-wrap{
         position: relative;
+        overflow: auto;
         .g-table-copy{
             position: absolute;
             top: 0;
