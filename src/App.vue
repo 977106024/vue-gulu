@@ -2,7 +2,7 @@
     <div id="app">
 <!--        table-->
         {{tableChecked}}
-        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData"></g-table>
+        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData" :loading="loading"></g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -397,7 +397,11 @@
         methods:{
             loadData(){
                 console.log('请求排序数据')
-                this.tableData = this.tableData.map(item=>item).sort((a,b)=>a.age-b.age)
+                this.loading = true
+                setTimeout(()=>{
+                    this.tableData = this.tableData.map(item=>item).sort((a,b)=>a.age-b.age)
+                    this.loading = false
+                },3000)
             },
             onChangeCheck({selected,index,val}){
                 if(selected){

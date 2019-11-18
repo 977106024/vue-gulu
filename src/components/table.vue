@@ -28,7 +28,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="g-table-loading">
+        <div v-if="loading" class="g-table-loading">
             <g-icon name="loading"></g-icon>
         </div>
     </div>
