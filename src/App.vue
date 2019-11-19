@@ -2,7 +2,13 @@
     <div id="app">
 <!--        table-->
         {{tableChecked}}
-        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData" :loading="loading" :height="400" bordered expend-key="description"></g-table>
+        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData"
+                 :loading="loading" :height="400" bordered expend-key="description" :checkable="true">
+            <template slot-scope="td">
+                <button @click="edit(td.item)">编辑</button>
+                <button @click="view(td.item)">查看</button>
+            </template>
+        </g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -450,6 +456,12 @@
             // },3000)
         },
         methods:{
+            edit(val){
+                alert(`编辑${val.id}`)
+            },
+            view(val){
+                alert(`查看${val.id}`)
+            },
             loadData(){
                 console.log('请求排序数据')
                 this.loading = true

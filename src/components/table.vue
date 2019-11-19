@@ -4,8 +4,8 @@
             <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}" ref="table">
                 <thead>
                 <tr>
-                    <th :style="{width:'50px'}"></th>
-                    <th :style="{width:'50px'}"><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
+                    <th v-if="expendKey" :style="{width:'50px'}"></th>
+                    <th v-if="checkable" :style="{width:'50px'}"><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
                     <th :style="{width:'50px'}" v-if="numberVisible">#</th>
                     <th :style="{width:item.width + 'px'}" v-for="item in columns">
                         <div class="g-table-header">
@@ -16,24 +16,28 @@
                         </span>
                         </div>
                     </th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <template v-for="(item,index) in data">
                     <tr :key="item.id">
-                        <td :style="{width:'50px'}">
+                        <td v-if="expendKey"  :style="{width:'50px'}">
                             <g-icon class="expend-icon" name="right" @click="expend(item.id)"></g-icon>
                         </td>
-                        <td :style="{width:'50px'}" @click="onChangeCheck(item,index,$event)">
+                        <td v-if="checkable" :style="{width:'50px'}" @click="onChangeCheck(item,index,$event)">
                             <input type="checkbox" :checked="inSelectedItems(item)">
                         </td>
                         <td :style="{width:'50px'}" v-if="numberVisible">{{index+1}}</td>
                         <template v-for="column in columns">
                             <td :style="{width:column.width + 'px'}" :key="column.key">{{item[column.key]}}</td>
                         </template>
+                        <td>
+                            <slot :item="item"></slot>
+                        </td>
                     </tr>
                     <tr v-if="inExpendIds(item.id)" :key="`expend-${item.id}`">
-                        <td :colspan="columns.length + 2">
+                        <td :colspan="expendCellColspan">
                             {{item[expendKey] || '空'}}
                         </td>
                     </tr>
@@ -96,6 +100,10 @@
             },
             expendKey:{
                 type:String
+            },
+            checkable:{
+                type:Boolean,
+                default:false
             }
         },
         data:()=>({
@@ -131,6 +139,12 @@
                 }
                 return equal
             },
+            expendCellColspan(){
+                let result = 0
+                if(this.checkable){result += 1}
+                if(this.expendKey){result += 1}
+                return this.columns.length + result
+            }
         },
         methods:{
             onChangeCheck(val,index,e){
