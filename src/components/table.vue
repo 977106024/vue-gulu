@@ -16,7 +16,7 @@
                         </span>
                         </div>
                     </th>
-                    <th></th>
+                    <th v-if="$scopedSlots.default" ref="actionsHeader"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,8 +32,10 @@
                         <template v-for="column in columns">
                             <td :style="{width:column.width + 'px'}" :key="column.key">{{item[column.key]}}</td>
                         </template>
-                        <td>
-                            <slot :item="item"></slot>
+                        <td v-if="$scopedSlots.default">
+                            <div ref="actions">
+                                <slot :item="item"></slot>
+                            </div>
                         </td>
                     </tr>
                     <tr v-if="inExpendIds(item.id)" :key="`expend-${item.id}`">
@@ -119,6 +121,22 @@
             this.$refs.tableWrap.style.height = this.height - height + 'px' //height要减去滚动条处理的marginTop 才是用户传值的400px
             table2.appendChild(tHead)
             this.$refs.wrap.appendChild(table2)
+
+            if (this.$scopedSlots.default) {
+                let div = this.$refs.actions[0]
+                let {width} = div.getBoundingClientRect()
+                let parent = div.parentNode //父元素
+                let styles = getComputedStyle(parent) //所有css
+                let paddingLeft = styles.getPropertyValue('padding-left') //某个css
+                let paddingRight = styles.getPropertyValue('padding-right')
+                let borderLeft = styles.getPropertyValue('border-left-width')
+                let borderRight = styles.getPropertyValue('border-right-width')
+                let width2 = width + parseInt(paddingRight) + parseInt(paddingLeft) + parseInt(borderLeft) + parseInt(borderRight) + 'px'
+                this.$refs.actionsHeader.style.width = width2
+                this.$refs.actions.map(div => {
+                    div.parentNode.style.width = width2
+                })
+            }
 
         },
         beforeDestroy(){

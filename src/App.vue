@@ -426,7 +426,6 @@
                     title: '住址',
                     dataIndex: 'address',
                     key: 'address',
-                    width:100
                 },
             ],
             tableChecked:[],
