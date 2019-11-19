@@ -4,6 +4,7 @@
             <table class="g-table" :class="{bordered,compact,noStripe:!stripeed}" ref="table">
                 <thead>
                 <tr>
+                    <th :style="{width:'50px'}"></th>
                     <th :style="{width:'50px'}"><input type="checkbox" @click="onChangeCheckAll" ref="allChecked" :checked="areAllItemsSelected"></th>
                     <th :style="{width:'50px'}" v-if="numberVisible">#</th>
                     <th :style="{width:item.width + 'px'}" v-for="item in columns">
@@ -18,15 +19,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in data" :key="item.id">
-                    <td :style="{width:'50px'}" @click="onChangeCheck(item,index,$event)">
-                        <input type="checkbox" :checked="inSelectedItems(item)">
-                    </td>
-                    <td :style="{width:'50px'}" v-if="numberVisible">{{index+1}}</td>
-                    <template v-for="column in columns">
-                        <td :style="{width:column.width + 'px'}" :key="column.key">{{item[column.key]}}</td>
-                    </template>
-                </tr>
+                <template v-for="(item,index) in data">
+                    <tr :key="item.id">
+                        <td :style="{width:'50px'}">
+                            <g-icon class="expend-icon" name="right" @click="expend(item.id)"></g-icon>
+                        </td>
+                        <td :style="{width:'50px'}" @click="onChangeCheck(item,index,$event)">
+                            <input type="checkbox" :checked="inSelectedItems(item)">
+                        </td>
+                        <td :style="{width:'50px'}" v-if="numberVisible">{{index+1}}</td>
+                        <template v-for="column in columns">
+                            <td :style="{width:column.width + 'px'}" :key="column.key">{{item[column.key]}}</td>
+                        </template>
+                    </tr>
+                    <tr v-if="inExpendIds(item.id)" :key="`expend-${item.id}`">
+                        <td :colspan="columns.length + 2">
+                            {{item[expendKey] || '空'}}
+                        </td>
+                    </tr>
+                </template>
                 </tbody>
             </table>
         </div>
@@ -82,8 +93,14 @@
             },
             height:{
                 type:Number
+            },
+            expendKey:{
+                type:String
             }
         },
+        data:()=>({
+            expendIds:[]
+        }),
         mounted(){
             let table2 = this.$refs.table.cloneNode(false)//false 不copy子元素
             this.table2 = table2
@@ -113,7 +130,7 @@
                     }
                 }
                 return equal
-            }
+            },
         },
         methods:{
             onChangeCheck(val,index,e){
@@ -144,6 +161,17 @@
                     copy[key] = 'asc'
                 }
                 this.$emit('update:orderBy',copy)
+            },
+            expend(id){
+                if(this.inExpendIds(id)){
+                    let index = this.expendIds.indexOf(id)
+                    this.expendIds.splice(index,1)
+                }else{
+                    this.expendIds.push(id)
+                }
+            },
+            inExpendIds(id){
+                return this.expendIds.indexOf(id) >= 0
             }
         },
         watch:{
@@ -211,6 +239,10 @@
             svg{
                 @include spin;
             }
+        }
+        .expend-icon{
+            width: 10px;
+            height: 10px;
         }
     }
     .g-table-wrap{

@@ -2,7 +2,7 @@
     <div id="app">
 <!--        table-->
         {{tableChecked}}
-        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData" :loading="loading" :height="400" bordered></g-table>
+        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData" :loading="loading" :height="400" bordered expend-key="description"></g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
 <!--        nav-->
@@ -329,11 +329,13 @@
                     name: '胡彦斌',
                     age: 3,
                     address: '西湖区湖底公园1号',
+                    description:'1233444444'
                 },{
                     id: '2',
                     name: '胡彦祖',
                     age: 42,
                     address: '西湖区湖底公园1号',
+                    description:'描述撒撒大多'
                 },{
                     id: '3',
                     name: '胡彦祖',
