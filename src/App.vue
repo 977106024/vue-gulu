@@ -1,5 +1,19 @@
 <template>
     <div id="app">
+<!--        图片上传-->
+        <g-upload accept="image/*" method="POST" action="https://upload-serve.herokuapp.com/upload" name="file"
+        :parse-response="parseResponse">
+            <button>上传</button>
+            <template slot="tips">
+                <div>只能上传 300kb 以内的 png、jpeg 文件</div>
+            </template>
+        </g-upload>
+        <button>保存</button>
+
+
+
+
+
 <!--        table-->
         {{tableChecked}}
         <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData"
@@ -455,6 +469,11 @@
             // },3000)
         },
         methods:{
+            parseResponse(response){
+                let obj = JSON.parse(response)
+                let url = `https://upload-serve.herokuapp.com/preview/${obj.id}`
+                return url
+            },
             edit(val){
                 alert(`编辑${val.id}`)
             },
