@@ -2,7 +2,7 @@
     <div id="app">
 <!--        图片上传-->
         <g-upload accept="image/*" method="POST" action="https://upload-serve.herokuapp.com/upload" name="file"
-        :parse-response="parseResponse">
+        :parse-response="parseResponse" :file-list.sync="fileList">
             <button>上传</button>
             <template slot="tips">
                 <div>只能上传 300kb 以内的 png、jpeg 文件</div>
@@ -445,7 +445,10 @@
             tableChecked:[],
             orderBy:{
                name:true, age:'asc'
-            }
+            },
+
+            //upload
+            fileList:[]
         }),
         created(){
             // ajax(0).then(res=>{
