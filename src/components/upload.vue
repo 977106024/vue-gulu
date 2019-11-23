@@ -8,9 +8,13 @@
 <!--        <img :src="imgUrl" alt="">-->
 
         <ol>
-            <li v-for="file in fileList" :key="file.name">
+            <li v-for="(file,index) in fileList" :key="file.name">
+                <template v-if="file.status=== 'uploading' ">
+                    菊花
+                </template>
                 <img :src="file.imgUrl" width="150px" height="150px" alt="">
                 {{file.name}}
+                <button @click="onRemoveFile(index)">删除</button>
             </li>
         </ol>
     </div>
@@ -45,31 +49,58 @@
             imgUrl:''
         }),
         methods:{
+            onRemoveFile(index){
+                let answer = window.confirm('你确定要删除这张图片吗？')
+                if(answer){
+                    let copy = [...this.fileList]
+                    copy.splice(index,1) //这里和老师写的不一样 老师都是用indexOf(file)
+                    this.$emit('update:fileList',copy)
+                }
+            },
             onClickUpload(){
                 let input = this.createInput()
                 input.addEventListener('change',()=>{
-                    let file = input.files[0]
+                    this.updateFile(input.files[0])
                     input.remove()
-                    this.updateFile(file)
                 })
                 input.click()
             },
-            updateFile(file){
+            beforeUploadFile(rawFile,newName){
+                let {name,size,type} = rawFile
+                this.$emit('update:fileList',[...this.fileList,{name:newName,size,type,status:'uploading'}])
+            },
+            updateFile(rawFile){
+                let {name,size,type} = rawFile
+                let newName = this.generateName(name)
+                this.beforeUploadFile(rawFile,newName)
                 //upadteFile
                 let formData = new FormData()
-                formData.append(this.name,file)
-                let {name,size,type} = file
+                formData.append(this.name,rawFile)
                 this.doUpdateFile(formData,(response)=>{
                     let imgUrl = this.parseResponse(response) //用户给我可预览的url
                     this.imgUrl = imgUrl
-                    while(this.fileList.filter(f=>f.name === name).length > 0){
-                        let dotIndex = name.lastIndex('.')
-                        let first = name.substring(0,dotIndex)
-                        let last = name.substring(dotIndex)
-                        name = first + '(1)' + last
-                    }
-                    this.$emit('update:fileList',[...this.fileList,{name,size,type,imgUrl}])
+                    this.afterUploadFile(rawFile,newName,imgUrl)
                 })
+            },
+            afterUploadFile(rawFile,newName,imgUrl){
+                let {name,size,type} = rawFile
+                let file = this.fileList.filter(f=>f.name === newName)[0] //file是props中拿出来的 props 要深拷贝
+                let index = this.fileList.indexOf(file)
+                let fileCopy = JSON.parse(JSON.stringify(file))
+                fileCopy.imgUrl = imgUrl
+                fileCopy.status = 'success'
+                let fileListCopy = [...this.fileList]
+                fileListCopy.splice(index,1,fileCopy)
+                this.$emit('update:fileList',fileListCopy)
+            },
+            generateName(name){
+                while(this.fileList.filter(f=>f.name === name).length > 0){
+                    let dotIndex = name.lastIndex('.')
+                    let first = name.substring(0,dotIndex)
+                    let last = name.substring(dotIndex)
+                    name = first + '(1)' + last
+                }
+                return name
             },
             doUpdateFile(formData,success){
                 let xhr = new XMLHttpRequest()
