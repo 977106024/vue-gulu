@@ -66,35 +66,51 @@
             onClickUpload(){
                 let input = this.createInput()
                 input.addEventListener('change',()=>{
-                    this.updateFile(input.files[0])
+                    this.updateFiles(input.files)
                     input.remove()
                 })
                 input.click()
             },
-            beforeUploadFile(rawFile,newName){
-                let {name,size,type} = rawFile
-                if(size > this.sizeLimit){ //默认是b 然后是kb m
-                    this.$emit('error','文件过大')
-                    return false
-                }else{
-                    this.$emit('update:fileList',[...this.fileList,{name:newName,size,type,status:'uploading'}])
-                    return true
+            beforeUploadFiles(rawFiles,newNames){
+                rawFiles = Array.from(rawFiles)
+                for(let i=0;i<rawFiles.length;i++){
+                    let {name,size,type} = rawFile
+                    if(size > this.sizeLimit){ //默认是b 然后是kb m
+                        this.$emit('error','文件过大')
+                        return false
+                    }
                 }
-            },
-            updateFile(rawFile){
-                let {name,size,type} = rawFile
-                let newName = this.generateName(name)
-                if(!this.beforeUploadFile(rawFile,newName))return
-                //upadteFile
-                let formData = new FormData()
-                formData.append(this.name,rawFile)
-                this.doUpdateFile(formData,(response)=>{
-                    let imgUrl = this.parseResponse(response) //用户给我可预览的url
-                    this.imgUrl = imgUrl
-                    this.afterUploadFile(newName,imgUrl)
-                },(xhr)=>{
-                    this.uploadError(newName,xhr)
+                let x = rawFiles.filter((rawFil,i)=>{ //把多个file合并起来更新给父组件
+                    let {size,type} = rawFil
+                    return {name:newNames[i],size,type,status:'uploading'}
                 })
+                this.$emit('update:fileList',[...this.fileList,...x])
+                return true
+            },
+            updateFiles(rawFiles){
+                let newNames = []
+                for(let i=0;i<rawFiles.length;i++){
+                    let rawFile = rawFiles[i]
+                    let {name,size,type} = rawFile
+                    let newName = this.generateName(name)
+                    newNames = newName[i]
+                }
+
+                if(!this.beforeUploadFiles(rawFiles,newNames))return
+
+                for(let i=0;i<rawFiles.length;i++){
+                    let rawFile = rawFiles[i]
+                    let newName = newNames[i]
+                    let formData = new FormData()
+                    formData.append(this.name,rawFile)
+                    this.doUpdateFile(formData,(response)=>{
+                        let imgUrl = this.parseResponse(response) //用户给我可预览的url
+                        this.imgUrl = imgUrl
+                        this.afterUploadFile(newName,imgUrl)
+                    },(xhr)=>{
+                        this.uploadError(newName,xhr)
+                    })
+                }
             },
             afterUploadFile(newName,imgUrl){
                 let file = this.fileList.filter(f=>f.name === newName)[0] //file是props中拿出来的 props 要深拷贝
@@ -146,6 +162,8 @@
                 //create input
                 let input = document.createElement('input')
                 input.type = 'file'
+                input.multiple = true //实际开发 改成props 让用户传
+                input.accept = 'image/*' //实际开发 改成props 让用户传
                 this.$refs.temp.appendChild(input)
                 return input
             },
