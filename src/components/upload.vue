@@ -63,13 +63,13 @@
                     this.$emit('update:fileList',copy)
                 }
             },
-            onClickUpload(){
-                let input = this.createInput()
-                input.addEventListener('change',()=>{
-                    this.updateFiles(input.files)
-                    input.remove()
+            onClickUpload(){ //1.点击上传
+                let input = this.createInput()//2.创建input
+                input.addEventListener('change',()=>{//3.监听input change事件
+                    this.updateFiles(input.files) //4.上传文件
+                    input.remove() //5.删除input
                 })
-                input.click()
+                input.click() //触发input点击
             },
             beforeUploadFiles(rawFiles,newNames){
                 rawFiles = Array.from(rawFiles)
@@ -89,26 +89,26 @@
             },
             updateFiles(rawFiles){
                 let newNames = []
-                for(let i=0;i<rawFiles.length;i++){
+                for(let i=0;i<rawFiles.length;i++){ //取到多文件的name
                     let rawFile = rawFiles[i]
                     let {name,size,type} = rawFile
                     let newName = this.generateName(name)
                     newNames = newName[i]
                 }
 
-                if(!this.beforeUploadFiles(rawFiles,newNames))return
+                if(!this.beforeUploadFiles(rawFiles,newNames))return //上传之前
 
-                for(let i=0;i<rawFiles.length;i++){
+                for(let i=0;i<rawFiles.length;i++){ //每个文件依次调用上传
                     let rawFile = rawFiles[i]
                     let newName = newNames[i]
                     let formData = new FormData()
                     formData.append(this.name,rawFile)
-                    this.doUpdateFile(formData,(response)=>{
+                    this.doUpdateFile(formData,(response)=>{ //调用接口上传
                         let imgUrl = this.parseResponse(response) //用户给我可预览的url
                         this.imgUrl = imgUrl
-                        this.afterUploadFile(newName,imgUrl)
+                        this.afterUploadFile(newName,imgUrl) //上传成功
                     },(xhr)=>{
-                        this.uploadError(newName,xhr)
+                        this.uploadError(newName,xhr) //上传失败
                     })
                 }
             },
