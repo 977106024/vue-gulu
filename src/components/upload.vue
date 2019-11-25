@@ -74,13 +74,13 @@
             beforeUploadFiles(rawFiles,newNames){
                 rawFiles = Array.from(rawFiles)
                 for(let i=0;i<rawFiles.length;i++){
-                    let {name,size,type} = rawFile
+                    let {name,size,type} = rawFiles[i]
                     if(size > this.sizeLimit){ //默认是b 然后是kb m
                         this.$emit('error','文件过大')
                         return false
                     }
                 }
-                let x = rawFiles.filter((rawFil,i)=>{ //把多个file合并起来更新给父组件
+                let x = rawFiles.map((rawFil,i)=>{ //把多个file合并起来更新给父组件
                     let {size,type} = rawFil
                     return {name:newNames[i],size,type,status:'uploading'}
                 })
