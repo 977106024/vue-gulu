@@ -51,6 +51,7 @@ import GSubNav from './components/nav/sub-nav'
 import GPager from './components/pager'
 import GTable from './components/table'
 import GUplaod from './components/upload'
+import GSticky from './components/sticky'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -81,6 +82,7 @@ Vue.component('g-sub-nav',GSubNav)
 Vue.component('g-pager',GPager)
 Vue.component('g-table',GTable)
 Vue.component('g-upload',GUplaod)
+Vue.component('g-sticky',GSticky)
 
 Vue.config.productionTip = false
 

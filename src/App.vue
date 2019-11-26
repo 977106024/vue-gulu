@@ -1,5 +1,17 @@
 <template>
     <div id="app">
+<!--        sticky-->
+        <g-sticky>
+            <p>吸附在顶上的内容</p>
+        </g-sticky>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+
 <!--        图片上传-->
         <div>只能上传 300kb 以内的 png、jpeg 文件</div>
         <g-upload accept="image/*" method="POST" action="https://upload-serve.herokuapp.com/upload" name="file"
