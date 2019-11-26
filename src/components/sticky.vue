@@ -35,7 +35,7 @@
             },
             scrollHandler(){
                 let top = this.offsetTop()
-                if(window.scrollY > top - this.distance){ //滚动的距离 超过 滚动距离+离顶部距离
+                if(window.scrollY > top - this.distance){ //滚动的距离 超过 滚动距离+离顶部距离 2.顶部距离-distance 还没到顶部就要sticky
                     let {width,height,left} = this.$refs.wrap.getBoundingClientRect()
                     this.width = width + 'px'
                     this.height = height + 'px'
@@ -59,9 +59,6 @@
         &.sticky{
             background: red;
             position:fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
         }
     }
 </style>
