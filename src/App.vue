@@ -1,7 +1,13 @@
 <template>
     <div id="app">
 <!--        sticky-->
-        <g-sticky>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <g-sticky :distance="100">
             <p>吸附在顶上的内容</p>
         </g-sticky>
         <p>这是一段话</p>
