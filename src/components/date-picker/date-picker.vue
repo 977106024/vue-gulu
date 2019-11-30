@@ -14,8 +14,11 @@
                         <div v-if="mode === 'years'" class="g-date-picker-content">年</div>
                         <div v-else-if="mode === 'months'" class="g-date-picker-content">月</div>
                         <div v-else class="g-date-picker-content">
-                            <div v-for="i in helper.range(1,7)">
-                                <span v-for="j in helper.range(1,8)">
+                            <div :class="c('weekdays')">
+                                <span v-for="i in [1,2,3,4,5,6,0]">{{weekdays[i]}}</span>
+                            </div>
+                            <div :class="c('row')" v-for="i in helper.range(1,7)">
+                                <span :class="c('col')" v-for="j in helper.range(1,8)">
                                     {{visibleDays[(i-1)*7+j-1].getDate()}}
 <!--                                    i=1 j=1 0-->
 <!--                                    i=1 j=2 1-->
@@ -33,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="g-date-picker-actions"></div>
+                    <div class="g-date-picker-actions">清除</div>
                 </div>
             </template>
         </g-popover>
@@ -47,7 +50,8 @@
         data:()=>({
             mode:'days',
             value:new Date(),
-            helper:helper
+            helper:helper,
+            weekdays:['日','一','二','三','四','五','六']
         }),
         mounted(){
 
@@ -87,6 +91,9 @@
             }
         },
         methods:{
+            c(className){
+                return `g-data-picker-${className}`
+            },
             onBlurInput(){
 
             },
