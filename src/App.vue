@@ -1,5 +1,8 @@
 <template>
     <div id="app">
+<!--        日历-->
+        <g-date-picker></g-date-picker>
+
 <!--        sticky-->
         <p>这是一段话</p>
         <p>这是一段话</p>
@@ -33,12 +36,19 @@
 
 <!--        table-->
         {{tableChecked}}
-        <g-table :data="tableData" :columns="columns" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData"
+        <g-table :data="tableData" :selected-items.sync="tableChecked" :orderBy.sync="orderBy" @update:orderBy="loadData"
                  :loading="loading" :height="400" bordered expend-key="description" :checkable="true">
             <template slot-scope="td">
                 <button @click="edit(td.item)">编辑</button>
                 <button @click="view(td.item)">查看</button>
             </template>
+            <g-table-column title="姓名" field="name" width="100">
+                <template slot-scope="props">
+                    <a href="#">{{props.value}}</a>
+                </template>
+            </g-table-column>
+            <g-table-column title="年龄" field="age" width="100"></g-table-column>
+
         </g-table>
 <!--        pager-->
         <g-pager :total-page="10" :current-page.sync="currentPage" :hide-if-one-page="false" style="margin-bottom: 50px"></g-pager>
@@ -97,6 +107,7 @@
 <!--            <g-collapse-item title="ahong" name="3">帅哥</g-collapse-item>-->
 <!--        </g-collapse>-->
 <!--        <p>{{selected}}</p>-->
+
 <!--        popover-->
 <!--        <g-popover position="left">-->
 <!--            <template slot="content" slot-scope="{close}">-->

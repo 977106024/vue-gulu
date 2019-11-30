@@ -10,9 +10,9 @@
                     <th :style="{width:item.width + 'px'}" v-for="item in columns">
                         <div class="g-table-header">
                             {{item.title}}
-                            <span v-if="item.key in orderBy" class="g-table-sorter" @click="changeOrder(item.key)">
-                            <g-icon name="left" :class="{active:orderBy[item.key] === 'asc' ? true : false}"></g-icon>
-                            <g-icon name="right" :class="{active:orderBy[item.key] === 'desc' ? true : false}"></g-icon>
+                            <span v-if="item.field in orderBy" class="g-table-sorter" @click="changeOrder(item.field)">
+                            <g-icon name="left" :class="{active:orderBy[item.field] === 'asc' ? true : false}"></g-icon>
+                            <g-icon name="right" :class="{active:orderBy[item.field] === 'desc' ? true : false}"></g-icon>
                         </span>
                         </div>
                     </th>
@@ -30,7 +30,14 @@
                         </td>
                         <td :style="{width:'50px'}" v-if="numberVisible">{{index+1}}</td>
                         <template v-for="column in columns">
-                            <td :style="{width:column.width + 'px'}" :key="column.key">{{item[column.key]}}</td>
+                            <td :style="{width:column.width + 'px'}" :key="column.field">
+                                <template v-if="column.render">
+                                    <vnodes :vnodes="column.render({value:item[column.field]})"></vnodes>
+                                </template>
+                                <template v-else>
+                                    {{item[column.field]}}
+                                </template>
+                            </td>
                         </template>
                         <td v-if="$scopedSlots.default">
                             <div ref="actions">
@@ -57,11 +64,17 @@
 <script>
     export default {
         name: "guluTable",
+        components:{
+            vnodes:{
+                functional:true,
+                render:(h,ctx) => ctx.props.vnodes
+            }
+        },
         props:{
-            columns:{
-                type:Array,
-                require:true
-            },
+            // columns:{
+            //     type:Array,
+            //     require:true
+            // },
             data:{
                 type:Array,
                 require: true,
@@ -109,9 +122,17 @@
             }
         },
         data:()=>({
-            expendIds:[]
+            expendIds:[],
+            columns:[]
         }),
         mounted(){
+            this.columns = this.$slots.default.map(node=>{
+                console.log(node.componentOptions,'ssssssqqq');
+                let {title,field,width} = node.componentOptions.propsData
+                let render = node.data.scopedSlots && node.data.scopedSlots.default //(template <a></a>) 就是render
+                return {title,field,width,render}
+            })
+
             let table2 = this.$refs.table.cloneNode(false)//false 不copy子元素
             this.table2 = table2
             table2.classList.add('g-table-copy')

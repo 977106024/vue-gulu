@@ -50,8 +50,10 @@ import GNavItem from './components/nav/nav-item'
 import GSubNav from './components/nav/sub-nav'
 import GPager from './components/pager'
 import GTable from './components/table'
+import GTableColumn from './components/table-column'
 import GUplaod from './components/upload'
 import GSticky from './components/sticky'
+import GDatePicker from './components/date-picker/date-picker'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -83,6 +85,8 @@ Vue.component('g-pager',GPager)
 Vue.component('g-table',GTable)
 Vue.component('g-upload',GUplaod)
 Vue.component('g-sticky',GSticky)
+Vue.component('g-table-column',GTableColumn)
+Vue.component('g-date-picker',GDatePicker)
 
 Vue.config.productionTip = false
 
