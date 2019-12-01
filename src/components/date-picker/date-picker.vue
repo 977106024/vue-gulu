@@ -1,7 +1,7 @@
 <template>
     <div class="g-date-picker" ref="wrap">
         <g-popover position="bottom" :container="wrapElement">
-            <g-input :value="fdate"></g-input>
+            <g-input :value="formattedValue"></g-input>
             <template slot="content">
                 <div class="g-date-picker-pop">
                     <div class="g-date-picker-nav">
@@ -22,7 +22,7 @@
                                 <span :class="c('weekday')" v-for="i in [1,2,3,4,5,6,0]" :key="i">{{weekdays[i]}}</span>
                             </div>
                             <div :class="c('row')" v-for="i in helper.range(1,7)" :key="i">
-                                <span :class="c('cell')" v-for="j in helper.range(1,8)" :key="j" @click="onClickCell(getVisibleDay(i,j))">
+                                <span :class="[c('cell'),{currentMonth:isCurrentMonth(getVisibleDay(i,j))}]" v-for="j in helper.range(1,8)" :key="j" @click="onClickCell(getVisibleDay(i,j))">
                                     {{getVisibleDay(i,j).getDate()}}
 <!--                                    i=1 j=1 0-->
 <!--                                    i=1 j=2 1-->
@@ -84,17 +84,24 @@
                 }
                 return arr
             },
-            fdate(){
+            formattedValue(){
                 let [year,month,day] = helper.getYearMonthDate(this.value)
                 return `${year}-${month+1}-${day}`
             }
         },
         methods:{
+            isCurrentMonth(date){
+                let [year1,month1] = helper.getYearMonthDate(date)
+                let [year2,month2] = helper.getYearMonthDate(this.value)
+                return year1 === year2 && month1 === month2
+            },
             c(...classNames){
                 return classNames.map(className=>`g-date-picker-${className}`)
             },
             onClickCell(date){
-                this.$emit('update:value',date)
+                if(this.isCurrentMonth(date)){
+                    this.$emit('update:value',date)
+                }
             },
             getVisibleDay(row,col){
                 return this.visibleDays[(row-1)*7+col-1]
@@ -130,6 +137,12 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
+        }
+        &-cell{
+            color: #ddd;
+            &.currentMonth{
+                color: black;
+            }
         }
         /deep/ .g-popover-content-wrap{
             padding: 0;
