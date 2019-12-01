@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <g-popover position="bottom">
+    <div class="g-date-picker" ref="wrap">
+        <g-popover position="bottom" :container="wrapElement">
             <g-input></g-input>
             <template slot="content">
                 <div class="g-date-picker-pop">
@@ -15,10 +15,10 @@
                         <div v-else-if="mode === 'months'" class="g-date-picker-content">月</div>
                         <div v-else class="g-date-picker-content">
                             <div :class="c('weekdays')">
-                                <span v-for="i in [1,2,3,4,5,6,0]">{{weekdays[i]}}</span>
+                                <span v-for="i in [1,2,3,4,5,6,0]" :key="i">{{weekdays[i]}}</span>
                             </div>
-                            <div :class="c('row')" v-for="i in helper.range(1,7)">
-                                <span :class="c('col')" v-for="j in helper.range(1,8)">
+                            <div :class="c('row')" v-for="i in helper.range(1,7)" :key="i">
+                                <span :class="c('col')" v-for="j in helper.range(1,8)" :key="j">
                                     {{visibleDays[(i-1)*7+j-1].getDate()}}
 <!--                                    i=1 j=1 0-->
 <!--                                    i=1 j=2 1-->
@@ -51,10 +51,11 @@
             mode:'days',
             value:new Date(),
             helper:helper,
-            weekdays:['日','一','二','三','四','五','六']
+            weekdays:['日','一','二','三','四','五','六'],
+            wrapElement:null
         }),
         mounted(){
-
+            this.wrapElement = this.$refs.wrap
 
         },
         computed:{
@@ -62,32 +63,18 @@
                 let date = this.value
                 let first = helper.firstDayOfMonth(date) //Mon Jan 01 2018 00:00:00 GMT+0800 (中国标准时间)
                 let last = helper.lastDayOfMonth(date)
-
-                //当月 月初---月尾
-                let arr = []
                 let [year,month] = helper.getYearMonthDate(date)
-                for(let i=first.getDate();i<=last.getDate();i++){
-                    arr.push(new Date(year,month,i)) //年月是固定的 从date里获取的 日是for循环出来的
-                }
 
-                // 上月的几天
+                //1号是星期几 -1就是上月的n天
                 let n = first.getDay() === 0 ? 6 : first.getDay() -1 //1.n-1 2.getDay()的7 等于 0
-                let arr2 = []
-                for(let i=0;i<n;i++){
-                    arr2.push(new Date(year,month,-i))
-                }
-                arr2 = arr2.reverse()
+                //1号-上月的n天 = 42的第一天
+                let x = first - n * 3600 * 24 * 1000
 
-                //下月的几天
-                let m = 42 - arr.length - arr2.length //总数减去 等于剩下的
-                let arr3 = []
-                for(let i=1;i<=m;i++){ //跳过0 0就是当天    <=就是包括最后一位
-                    arr3.push(new Date(year,month+1,i))
+                let arr = []
+                for(let i=0;i<42;i++){
+                    arr.push(new Date(x + i * 3600 * 24 * 1000)) //3600秒 * 24小时 * 1000毫秒
                 }
-
-                console.log('arr3')
-                console.log(arr3)
-                return [...arr2,...arr,...arr3]
+                return arr
             }
         },
         methods:{
@@ -108,5 +95,12 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .g-date-picker{
+        &-nav{
+            background: red;
+        }
+        /deep/ .g-popover-content-wrap{
+            padding: 0;
+        }
+    }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="popover" ref="popover">
-        <div class="content-wrap" ref="contentWrap" v-if="visible" :class="`position-${position}`">
+        <div class="g-popover-content-wrap" ref="contentWrap" v-if="visible" :class="`position-${position}`">
             <slot name="content" :close="close"></slot>
         </div>
         <span class="triggerWrap" ref="triggerWrap" style="display: inline-block;">
@@ -26,6 +26,9 @@
                 validator(value){
                     return ['click','hover'].indexOf(value) >= 0
                 }
+            },
+            container:{
+                type:Element
             }
         },
         data:()=>({
@@ -57,8 +60,8 @@
         // },
         methods:{
             positionContent(){
-                const {contentWrap,triggerWrap} = this.$refs
-                document.body.appendChild(contentWrap)
+                const {contentWrap,triggerWrap} = this.$refs;
+                (this.container || document.body).appendChild(contentWrap)
                 let {top,left,height,width} = triggerWrap.getBoundingClientRect()
                 let {height:contentHeight} = contentWrap.getBoundingClientRect()
                 const positions = { //表驱动编程 逻辑注释在commit中
@@ -123,7 +126,7 @@
         position: relative;
     }
     /*该元素在body中，不在.popover元素下 要拿出来写*/
-    .content-wrap{
+    .g-popover-content-wrap{
         max-width: 20em;
         position: absolute;
         border: 1px solid $border-color;
