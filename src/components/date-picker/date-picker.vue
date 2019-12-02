@@ -5,14 +5,14 @@
             <template slot="content">
                 <div class="g-date-picker-pop">
                     <div class="g-date-picker-nav">
-                        <span :class="c('prevYear','navItem')"> << </span>
-                        <span :class="c('prevMonth','navItem')"> < </span>
+                        <span :class="c('prevYear','navItem')" @click="onClickPrevYear"> << </span>
+                        <span :class="c('prevMonth','navItem')" @click="onClickPrevMonth"> < </span>
                         <span :class="c('yearAndMonth')">
-                            <span @click="onClickYear">2020年</span>
-                            <span @click="onClickMouth">8月</span>
+                            <span @click="onClickYear">{{display.year}}年</span>
+                            <span @click="onClickMouth">{{display.month+1}}月</span>
                         </span>
-                        <span :class="c('nextYear','navItem')"> > </span>
-                        <span :class="c('nextMonth','navItem')"> >> </span>
+                        <span :class="c('nextYear','navItem')" @click="onClickNextMonth"> > </span>
+                        <span :class="c('nextMonth','navItem')" @click="onClickNextYear"> >> </span>
                     </div>
                     <div class="g-date-picker-panels">
                         <div v-if="mode === 'years'" class="g-date-picker-content">年</div>
@@ -61,14 +61,24 @@
             mode:'days',
             helper:helper,
             weekdays:['日','一','二','三','四','五','六'],
-            wrapElement:null
+            wrapElement:null,
+            display:{
+                year:undefined,
+                month:undefined
+            }
         }),
+        created(){
+            let [year,month] = helper.getYearMonthDate(this.value)
+            this.display.year = year
+            this.display.month = month
+
+        },
         mounted(){
             this.wrapElement = this.$refs.wrap
         },
         computed:{
             visibleDays(){
-                let date = this.value
+                let date = new Date(this.display.year,this.display.month,1)
                 let first = helper.firstDayOfMonth(date) //Mon Jan 01 2018 00:00:00 GMT+0800 (中国标准时间)
                 let last = helper.lastDayOfMonth(date)
                 let [year,month] = helper.getYearMonthDate(date)
@@ -90,10 +100,33 @@
             }
         },
         methods:{
+            onClickPrevYear(){
+                const oldDate = new Date(this.display.year,this.display.month)
+                const newDate = helper.addYear(oldDate,-1)
+                const [year,month] = helper.getYearMonthDate(newDate)
+                this.display = {year,month}
+            },
+            onClickPrevMonth(){
+                const oldDate = new Date(this.display.year,this.display.month)//旧的时间
+                const newDate = helper.addMonth(oldDate,-1)//月份减一
+                const [year,month] = helper.getYearMonthDate(newDate) //减一后获取新的年月
+                this.display = {year,month}
+1             },
+            onClickNextYear(){
+                const oldDate = new Date(this.display.year,this.display.month)
+                const newDate = helper.addYear(oldDate,1)
+                const [year,month] = helper.getYearMonthDate(newDate)
+                this.display = {year,month}
+            },
+            onClickNextMonth(){
+                const oldDate = new Date(this.display.year,this.display.month)
+                const newDate = helper.addMonth(oldDate,1)
+                const [year,month] = helper.getYearMonthDate(newDate)
+                this.display = {year,month}
+            },
             isCurrentMonth(date){
                 let [year1,month1] = helper.getYearMonthDate(date)
-                let [year2,month2] = helper.getYearMonthDate(this.value)
-                return year1 === year2 && month1 === month2
+                return year1 === this.display.year && month1 === this.display.month
             },
             c(...classNames){
                 return classNames.map(className=>`g-date-picker-${className}`)
