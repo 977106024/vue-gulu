@@ -3,41 +3,51 @@
         <g-popover position="bottom" :container="wrapElement">
             <g-input :value="formattedValue"></g-input>
             <template slot="content">
-                <div class="g-date-picker-pop">
+                <div class="g-date-picker-pop" @selectstart.prevent>
                     <div class="g-date-picker-nav">
                         <span :class="c('prevYear','navItem')" @click="onClickPrevYear"> << </span>
                         <span :class="c('prevMonth','navItem')" @click="onClickPrevMonth"> < </span>
-                        <span :class="c('yearAndMonth')">
-                            <span @click="onClickYear">{{display.year}}年</span>
-                            <span @click="onClickMouth">{{display.month+1}}月</span>
+                        <span :class="c('yearAndMonth')" @click="onClickMouth">
+                            <span>{{display.year}}年</span>
+                            <span>{{display.month+1}}月</span>
                         </span>
                         <span :class="c('nextYear','navItem')" @click="onClickNextMonth"> > </span>
                         <span :class="c('nextMonth','navItem')" @click="onClickNextYear"> >> </span>
                     </div>
                     <div class="g-date-picker-panels">
-                        <div v-if="mode === 'years'" class="g-date-picker-content">年</div>
-                        <div v-else-if="mode === 'months'" class="g-date-picker-content">月</div>
-                        <div v-else class="g-date-picker-content">
-                            <div :class="c('weekdays')">
-                                <span :class="c('weekday')" v-for="i in [1,2,3,4,5,6,0]" :key="i">{{weekdays[i]}}</span>
-                            </div>
-                            <div :class="c('row')" v-for="i in helper.range(1,7)" :key="i">
+                        <div class="g-date-picker-content">
+                            <template v-if="mode === 'month'">
+                                <div :class="c('selectMonth')">
+                                    <select name="" id="" @change="onSelectYear" :value="display.year">
+                                        <option :value="year" v-for="year in years" :key="year">{{year}}</option>
+                                    </select>年
+                                    <select name="" id="" @change="onSelectMonth" :value="display.month">
+                                        <option :value="month" v-for="month in helper.range(0,12)" :key="month">{{month+1}}</option>
+                                    </select>月
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div :class="c('weekdays')">
+                                    <span :class="c('weekday')" v-for="i in [1,2,3,4,5,6,0]" :key="i">{{weekdays[i]}}</span>
+                                </div>
+                                <div :class="c('row')" v-for="i in helper.range(1,7)" :key="i">
                                 <span :class="[c('cell'),{currentMonth:isCurrentMonth(getVisibleDay(i,j))}]" v-for="j in helper.range(1,8)" :key="j" @click="onClickCell(getVisibleDay(i,j))">
                                     {{getVisibleDay(i,j).getDate()}}
-<!--                                    i=1 j=1 0-->
-<!--                                    i=1 j=2 1-->
-<!--                                    i=1 j=3 2-->
-<!--                                    i=1 j=4 3-->
-<!--                                    i=1 j=5 4-->
+                                    <!--                                    i=1 j=1 0-->
+                                    <!--                                    i=1 j=2 1-->
+                                    <!--                                    i=1 j=3 2-->
+                                    <!--                                    i=1 j=4 3-->
+                                    <!--                                    i=1 j=5 4-->
 
-<!--                                    i=2 j=1 7-->
-<!--                                    i=2 j=2 8-->
-<!--                                    i=2 j=3 9-->
-<!--                                    i=2 j=4 10-->
-<!--                                    i=2 j=5 11-->
+                                    <!--                                    i=2 j=1 7-->
+                                    <!--                                    i=2 j=2 8-->
+                                    <!--                                    i=2 j=3 9-->
+                                    <!--                                    i=2 j=4 10-->
+                                    <!--                                    i=2 j=5 11-->
 
                                 </span>
-                            </div>
+                                </div>
+                            </template>
                         </div>
                     </div>
                     <div class="g-date-picker-actions">清除</div>
@@ -55,7 +65,11 @@
           value:{
               type:Date,
               default:new Date()
-          }
+          },
+            scoped:{
+              type:Array,
+                default:()=>[new Date(1900,0,1),helper.addYear(new Date(),100)]
+            }
         },
         data:()=>({
             mode:'days',
@@ -75,6 +89,7 @@
         },
         mounted(){
             this.wrapElement = this.$refs.wrap
+            console.log(this.years);
         },
         computed:{
             visibleDays(){
@@ -97,9 +112,35 @@
             formattedValue(){
                 let [year,month,day] = helper.getYearMonthDate(this.value)
                 return `${year}-${month+1}-${day}`
+            },
+            years(){
+                return helper.range(
+                    this.scoped[0].getFullYear(),
+                    this.scoped[1].getFullYear() + 1
+                )
             }
         },
         methods:{
+            onSelectYear(e){
+                const year = e.target.value - 0
+                const d = new Date(year,this.display.month)
+                if(d >= this.scoped[0] && d <= this.scoped[1]){
+                    this.display.year = year
+                }else{
+                    alert('不在范围内')
+                    e.target.value = this.display.year
+                }
+            },
+            onSelectMonth(e){
+                const month = e.target.value - 0
+                const d = new Date(this.display.year,month)
+                if(d >= this.scoped[0] && d <= this.scoped[1]){
+                    this.display.month = month
+                }else{
+                    alert('不在范围内')
+                    e.target.value = this.display.month
+                }
+            },
             onClickPrevYear(){
                 const oldDate = new Date(this.display.year,this.display.month)
                 const newDate = helper.addYear(oldDate,-1)
@@ -139,14 +180,12 @@
             getVisibleDay(row,col){
                 return this.visibleDays[(row-1)*7+col-1]
             },
-            onBlurInput(){
-
-            },
-            onClickYear(){
-                this.mode = 'years'
-            },
             onClickMouth(){
-                this.mode = 'months'
+                if(this.mode !== 'month'){
+                    this.mode = 'month'
+                }else{
+                    this.mode = 'year'
+                }
             },
         }
     }
@@ -176,6 +215,13 @@
             &.currentMonth{
                 color: black;
             }
+        }
+        &-selectMonth{
+            width: 242px;
+            height: 242px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         /deep/ .g-popover-content-wrap{
             padding: 0;

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 <!--        日历-->
-        <g-date-picker :value.sync="dateValue"></g-date-picker>
+        <g-date-picker :value.sync="dateValue" :scoped="[new Date(1950,1),new Date(2019,6)]"></g-date-picker>
 
 <!--        sticky-->
         <p>这是一段话</p>
@@ -478,7 +478,7 @@
             //upload
             fileList:[],
 
-            dateValue:new Date()
+            dateValue:new Date(2019,6)
         }),
         created(){
             // ajax(0).then(res=>{
