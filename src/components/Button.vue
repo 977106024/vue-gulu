@@ -83,5 +83,8 @@
                 order: 1;
             }
         }
+        & + &{
+            margin-left: 4px;
+        }
     }
 </style>

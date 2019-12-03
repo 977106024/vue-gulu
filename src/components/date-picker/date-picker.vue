@@ -31,7 +31,12 @@
                                     <span :class="c('weekday')" v-for="i in [1,2,3,4,5,6,0]" :key="i">{{weekdays[i]}}</span>
                                 </div>
                                 <div :class="c('row')" v-for="i in helper.range(1,7)" :key="i">
-                                <span :class="[c('cell'),{currentMonth:isCurrentMonth(getVisibleDay(i,j))}]" v-for="j in helper.range(1,8)" :key="j" @click="onClickCell(getVisibleDay(i,j))">
+                                <span :class="[c('cell'),{
+                                currentMonth:isCurrentMonth(getVisibleDay(i,j)),
+                                selected:isSelected(getVisibleDay(i,j)),
+                                today:isToday(getVisibleDay(i,j))
+                                }]" v-for="j in helper.range(1,8)" :key="j"
+                                      @click="onClickCell(getVisibleDay(i,j))">
                                     {{getVisibleDay(i,j).getDate()}}
                                     <!--                                    i=1 j=1 0-->
                                     <!--                                    i=1 j=2 1-->
@@ -50,7 +55,10 @@
                             </template>
                         </div>
                     </div>
-                    <div class="g-date-picker-actions">清除</div>
+                    <div class="g-date-picker-actions">
+                        <g-button @click="onClickToday">今天</g-button>
+                        <g-button @click="onClickClear">清除</g-button>
+                    </div>
                 </div>
             </template>
         </g-popover>
@@ -64,7 +72,6 @@
         props:{
           value:{
               type:Date,
-              default:new Date()
           },
             scoped:{
               type:Array,
@@ -82,7 +89,7 @@
             }
         }),
         created(){
-            let [year,month] = helper.getYearMonthDate(this.value)
+            let [year,month] = helper.getYearMonthDate(this.value || new Date())
             this.display.year = year
             this.display.month = month
 
@@ -110,6 +117,7 @@
                 return arr
             },
             formattedValue(){
+                if(!this.value){return ''}
                 let [year,month,day] = helper.getYearMonthDate(this.value)
                 return `${year}-${month+1}-${day}`
             },
@@ -121,6 +129,18 @@
             }
         },
         methods:{
+            isSelected(date){
+                if(!this.value)return
+                const [year,month,day] = helper.getYearMonthDate(date)
+                const [year2,month2,day2,] = helper.getYearMonthDate(this.value)
+                return year === year2 && month === month2 && day === day2
+            },
+            isToday(date){
+                const today = new Date()
+                const [year,month,day] = helper.getYearMonthDate(today)
+                const [year2,month2,day2] = helper.getYearMonthDate(date)
+                return year === year2 && month === month2 && day === day2
+            },
             onSelectYear(e){
                 const year = e.target.value - 0
                 const d = new Date(year,this.display.month)
@@ -187,6 +207,15 @@
                     this.mode = 'year'
                 }
             },
+            onClickToday(){
+                const now = new Date()
+                const [year,month] = helper.getYearMonthDate(now)
+                this.display = {year,month}
+                this.$emit('update:value',now)
+            },
+            onClickClear(){
+                this.$emit('update:value',undefined)
+            }
         }
     }
 </script>
@@ -205,15 +234,27 @@
         &-weekday{
             width: 32px;
             height: 32px;
-            border:1px solid red;
             display: inline-flex;
             justify-content: center;
             align-items: center;
         }
         &-cell{
             color: #ddd;
+            cursor: not-allowed;
+            border-radius: 4px;
             &.currentMonth{
                 color: black;
+                &:hover{
+                    color: #fff;
+                    background: blueviolet;
+                    cursor: pointer;
+                }
+            }
+            &.selected{
+                border:1px solid blueviolet;
+            }
+            &.today{
+                background: #eee;
             }
         }
         &-selectMonth{
@@ -225,6 +266,10 @@
         }
         /deep/ .g-popover-content-wrap{
             padding: 0;
+        }
+        &-actions{
+            padding:8px;
+            text-align: right;
         }
     }
 </style>
