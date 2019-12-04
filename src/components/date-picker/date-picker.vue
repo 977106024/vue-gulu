@@ -1,6 +1,6 @@
 <template>
     <div class="g-date-picker" ref="wrap">
-        <g-popover position="bottom" :container="wrapElement">
+        <g-popover position="bottom" :container="wrapElement" ref="popover">
             <g-input :value="formattedValue"></g-input>
             <template slot="content">
                 <div class="g-date-picker-pop" @selectstart.prevent>
@@ -18,12 +18,15 @@
                         <div class="g-date-picker-content">
                             <template v-if="mode === 'month'">
                                 <div :class="c('selectMonth')">
-                                    <select name="" id="" @change="onSelectYear" :value="display.year">
-                                        <option :value="year" v-for="year in years" :key="year">{{year}}</option>
-                                    </select>年
-                                    <select name="" id="" @change="onSelectMonth" :value="display.month">
-                                        <option :value="month" v-for="month in helper.range(0,12)" :key="month">{{month+1}}</option>
-                                    </select>月
+                                    <div :class="c('selects')">
+                                        <select name="" id="" @change="onSelectYear" :value="display.year">
+                                            <option :value="year" v-for="year in years" :key="year">{{year}}</option>
+                                        </select>年
+                                        <select name="" id="" @change="onSelectMonth" :value="display.month">
+                                            <option :value="month" v-for="month in helper.range(0,12)" :key="month">{{month+1}}</option>
+                                        </select>月
+                                    </div>
+                                    <div :class="c('returnToDayMode')"><button @click="x">返回</button></div>
                                 </div>
                             </template>
                             <template v-else>
@@ -79,7 +82,7 @@
             }
         },
         data:()=>({
-            mode:'days',
+            mode:'day',
             helper:helper,
             weekdays:['日','一','二','三','四','五','六'],
             wrapElement:null,
@@ -102,8 +105,6 @@
             visibleDays(){
                 let date = new Date(this.display.year,this.display.month,1)
                 let first = helper.firstDayOfMonth(date) //Mon Jan 01 2018 00:00:00 GMT+0800 (中国标准时间)
-                let last = helper.lastDayOfMonth(date)
-                let [year,month] = helper.getYearMonthDate(date)
 
                 //1号是星期几 -1就是上月的n天
                 let n = first.getDay() === 0 ? 6 : first.getDay() -1 //1.n-1 2.getDay()的7 等于 0
@@ -129,6 +130,11 @@
             }
         },
         methods:{
+            x(){
+                setTimeout(()=>{
+                    this.mode = 'day'
+                },0)
+            },
             isSelected(date){
                 if(!this.value)return
                 const [year,month,day] = helper.getYearMonthDate(date)
@@ -215,6 +221,7 @@
             },
             onClickClear(){
                 this.$emit('update:value',undefined)
+                this.$refs.popover.close()
             }
         }
     }
@@ -258,11 +265,15 @@
             }
         }
         &-selectMonth{
-            width: 242px;
-            height: 242px;
+            width: 224px;
+            height: 224px;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+        }
+        &-returnToDayMode{
+            margin-top: 8px;
         }
         /deep/ .g-popover-content-wrap{
             padding: 0;
