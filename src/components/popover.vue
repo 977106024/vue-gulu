@@ -96,6 +96,7 @@
             },
             open(){ //打开时 先定位 然后绑定document事件 等下次点击时可以冒泡关闭 但是点击content不会触发
                 this.visible = true
+                this.$emit('open')
                 // this.$nextTick(()=>{ //err nextTick不知道为啥不行
                 setTimeout(()=>{ //延时绑定时间 不然会一起触发click
                     this.positionContent()
@@ -105,6 +106,7 @@
             },
             close(){ //关闭时 关闭和移出document上的点击事件
                 this.visible = false
+                this.$emit('close')
                 document.removeEventListener('click',this.onClickDocument)//点击后删除事件
             },
             onClick(event){

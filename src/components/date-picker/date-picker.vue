@@ -1,6 +1,6 @@
 <template>
     <div class="g-date-picker" ref="wrap">
-        <g-popover position="bottom" :container="wrapElement" ref="popover">
+        <g-popover position="bottom" :container="wrapElement" ref="popover" @open="onOpen">
             <g-input :value="formattedValue"></g-input>
             <template slot="content">
                 <div class="g-date-picker-pop" @selectstart.prevent>
@@ -99,7 +99,6 @@
         },
         mounted(){
             this.wrapElement = this.$refs.wrap
-            console.log(this.years);
         },
         computed:{
             visibleDays(){
@@ -120,7 +119,7 @@
             formattedValue(){
                 if(!this.value){return ''}
                 let [year,month,day] = helper.getYearMonthDate(this.value)
-                return `${year}-${month+1}-${day}`
+                return `${helper.pad2(year)}-${helper.pad2(month+1)}-${helper.pad2(day)}`
             },
             years(){
                 return helper.range(
@@ -201,6 +200,7 @@
             onClickCell(date){
                 if(this.isCurrentMonth(date)){
                     this.$emit('update:value',date)
+                    this.$refs.popover.close()
                 }
             },
             getVisibleDay(row,col){
@@ -222,6 +222,9 @@
             onClickClear(){
                 this.$emit('update:value',undefined)
                 this.$refs.popover.close()
+            },
+            onOpen(){
+                this.mode = 'day'
             }
         }
     }

@@ -28,6 +28,12 @@ export default {
         copy.setFullYear(newYear)
         return copy
     },
+    pad2(number){
+        if(typeof number !== 'number'){
+            throw new Error('wrong param')
+        }
+        return (number < 10 ? '0' : '') + number //保证返回都是字符串
+    },
     getYearMonthDate,
 }
 
