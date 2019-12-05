@@ -1,7 +1,7 @@
 <template>
     <div class="g-date-picker" ref="wrap">
         <g-popover position="bottom" :container="wrapElement" ref="popover" @open="onOpen">
-            <g-input :value="formattedValue"></g-input>
+            <g-input ref="input" :value="formattedValue" @input="onInput" @change="onChange"></g-input>
             <template slot="content">
                 <div class="g-date-picker-pop" @selectstart.prevent>
                     <div class="g-date-picker-nav">
@@ -133,6 +133,19 @@
                 setTimeout(()=>{
                     this.mode = 'day'
                 },0)
+            },
+            onInput(value){
+                const regex = /^\d{4}-\d{2}-\d{2}$/g
+                if(value.match(regex)){
+                    let [year,month,day] = value.split("-")
+                    month = month -1 //上面加1了
+                    year = year - 0 //变成number
+                    this.display = {year,month}
+                    this.$emit("update:value",new Date(year,month,day))
+                }
+            },
+            onChange(){
+                this.$refs.input.setRawValue(this.formattedValue)
             },
             isSelected(date){
                 if(!this.value)return

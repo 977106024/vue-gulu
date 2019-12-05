@@ -1,6 +1,6 @@
 <template>
     <div id="g-input" :class="{error}">
-        <input type="text" :value="value" :disabled="disabled" :readonly="readonly"
+        <input ref="input" type="text" :value="value" :disabled="disabled" :readonly="readonly"
                @change="$emit('change')"
                @input="$emit('input',$event.target.value)"
                @focus="$emit('focus')"
@@ -27,6 +27,11 @@
             },
             error:{
                 type:String
+            }
+        },
+        methods:{
+            setRawValue(value){
+                this.$refs.input.value = value
             }
         }
     }
