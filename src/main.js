@@ -54,6 +54,7 @@ import GTableColumn from './components/table-column'
 import GUplaod from './components/upload'
 import GSticky from './components/sticky'
 import GDatePicker from './components/date-picker/date-picker'
+import GScroll from './components/scroll'
 
 Vue.component('g-button',GButton)
 Vue.component('g-icon',GIcon)
@@ -87,6 +88,7 @@ Vue.component('g-upload',GUplaod)
 Vue.component('g-sticky',GSticky)
 Vue.component('g-table-column',GTableColumn)
 Vue.component('g-date-picker',GDatePicker)
+Vue.component('g-scroll',GScroll)
 
 Vue.config.productionTip = false
 
