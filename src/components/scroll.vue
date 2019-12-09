@@ -10,10 +10,10 @@
     export default {
         name: "guluScroll",
         mounted() {
-            const parent = this.$refs.parent
-            const child = this.$refs.child
+            this.parent = this.$refs.parent
+            this.child = this.$refs.child
             let translateY = 0
-            parent.addEventListener('wheel',(e)=>{
+            this.parent.addEventListener('wheel',(e)=>{
                 //滑动的快与慢 一次滑的多就滚的多 大于20就算多
                 if(e.deltaY > 20){
                     translateY -= 20 * 3
@@ -26,10 +26,24 @@
                 //滚动 不能穿过底部 顶部
                 if(translateY > 0){
                     translateY = 0
-                }else if(translateY < -maxHeight){
-                    translateY = -maxHeight
+                }else if(translateY < -this.maxHeight()){
+                    translateY = -this.maxHeight()
+                }else{
+                    //只有在中间的时候 阻止滚动
+                    e.preventDefault()
                 }
+
+                this.child.style.transform = `translateY(${translateY}px)`
             })
+        },
+        methods:{
+            maxHeight(){
+                let {height:parentHeight} = this.parent.getBoundingClientRect()
+                let {height:childHeight} = this.child.getBoundingClientRect()
+                let {borderTopWidth,borderBottomWidth,paddingTop,paddingBottom} = window.getComputedStyle(this.parent)
+                //child高度减去第一屏
+                return childHeight - parentHeight + (parseInt(borderTopWidth) + parseInt(borderBottomWidth) + parseInt(paddingTop) + parseInt(paddingBottom))
+            }
         }
     }
 </script>
