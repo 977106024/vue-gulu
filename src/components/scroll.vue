@@ -3,6 +3,9 @@
         <div class="g-scroll-warp" ref="child">
             <slot></slot>
         </div>
+        <div class="g-scroll-track">
+            <div class="g-scroll-bar"></div>
+        </div>
     </div>
 </template>
 
@@ -52,8 +55,18 @@
     .g-scroll{
         border: 1px solid red;
         transition:transform 1s ease;
+        position: relative;
         &-wrap{
             border: 1px solid yellowgreen;
+        }
+        &-track{
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 14px;
+            height: 100%;
+            background: #fafafa;
+            border-left: 1px solid #e8e7e8;
         }
     }
 </style>
