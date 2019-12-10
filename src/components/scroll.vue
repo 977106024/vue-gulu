@@ -4,7 +4,7 @@
             <slot></slot>
         </div>
         <div class="g-scroll-track">
-            <div class="g-scroll-bar"></div>
+            <div class="g-scroll-bar" ref="bar"></div>
         </div>
     </div>
 </template>
@@ -16,6 +16,10 @@
             this.parent = this.$refs.parent
             this.child = this.$refs.child
             let translateY = 0
+
+            let {height:parentHeight} = this.parent.getBoundingClientRect()
+            let {height:childHeight} = this.child.getBoundingClientRect()
+
             this.parent.addEventListener('wheel',(e)=>{
                 //滑动的快与慢 一次滑的多就滚的多 大于20就算多
                 if(e.deltaY > 20){
@@ -37,6 +41,7 @@
                 }
 
                 this.child.style.transform = `translateY(${translateY}px)`
+                this.updateScrollBar(parentHeight,childHeight,translateY)
             })
         },
         methods:{
@@ -46,6 +51,13 @@
                 let {borderTopWidth,borderBottomWidth,paddingTop,paddingBottom} = window.getComputedStyle(this.parent)
                 //child高度减去第一屏
                 return childHeight - parentHeight + (parseInt(borderTopWidth) + parseInt(borderBottomWidth) + parseInt(paddingTop) + parseInt(paddingBottom))
+            },
+            updateScrollBar(parentHeight,childHeight,translateY){
+                const barHeight = parentHeight * parentHeight / childHeight
+                let bar = this.$refs.bar
+                bar.style.height = barHeight + 'px'
+                let y = parentHeight * translateY / childHeight
+                bar.style.transform = `translateY(${-y}px)`
             }
         }
     }
@@ -67,6 +79,20 @@
             height: 100%;
             background: #fafafa;
             border-left: 1px solid #e8e7e8;
+        }
+        &-bar{
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            margin-left: -4px;
+            height: 20px;
+            width: 8px;
+            border-radius: 4px;
+            background: #C2C2C2;
+            margin-top: 5px;
+            &:hover{
+                background: #7d7d7d;
+            }
         }
     }
 </style>
