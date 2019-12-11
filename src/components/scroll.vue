@@ -4,7 +4,7 @@
             <slot></slot>
         </div>
         <div class="g-scroll-track">
-            <div class="g-scroll-bar" ref="bar"></div>
+            <div class="g-scroll-bar" ref="bar" @mousedown="onMouseDownScrollBar"></div>
         </div>
     </div>
 </template>
@@ -12,7 +12,21 @@
 <script>
     export default {
         name: "guluScroll",
+        data:()=>({
+            isScrolling:false,
+            startPosition:undefined,
+            endPosition:undefined,
+            translateX:0,
+            translateY:0,
+        }),
         mounted() {
+            document.addEventListener('mousemove',(e)=>{
+                this.onMouseMoveScrollbar(e)
+            })
+            document.addEventListener('mouseup',()=>{
+                this.onMouseUpScrollbar()
+            })
+
             this.parent = this.$refs.parent
             this.child = this.$refs.child
             let translateY = 0
@@ -58,6 +72,24 @@
                 bar.style.height = barHeight + 'px'
                 let y = parentHeight * translateY / childHeight
                 bar.style.transform = `translateY(${-y}px)`
+            },
+            onMouseDownScrollBar(e){
+                this.isScrolling = true //准备开始移动
+                const {screenX,screenY} = e
+                this.startPosition = {x:screenX,y:screenY} //记录开始位置
+            },
+            onMouseMoveScrollbar(e){
+                if(!this.isScrolling)return //只要鼠标移动就会触发move事件 所以在按下时才是true
+                const {screenX,screenY} = e
+                this.endPosition = {x:screenX,y:screenY}
+                const delta = {x:this.endPosition.x - this.startPosition.x,y:this.endPosition.y - this.startPosition.y}
+                this.translateX = parseInt(this.translateX) + delta.x
+                this.translateY = parseInt(this.translateY) + delta.y
+                this.startPosition = this.endPosition
+                this.$refs.bar.style.transform = `translate(0px,${this.translateY}px)`
+            },
+            onMouseUpScrollbar(e){
+                this.isScrolling = false
             }
         }
     }
